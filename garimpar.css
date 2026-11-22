@@ -184,3 +184,19 @@ body { font-family: "Montserrat", sans-serif; }
   html { scroll-behavior: auto; }
   .faixa__trilho { animation-duration: calc(var(--duracao, 50s) * 3); }
 }
+
+/* ================= CELULAR ================= */
+@media (max-width: 800px) {
+  .tela {
+    --logo-largura: 84%;      /* tamanho do RE.CORTE */
+    --frase-tamanho: 1.15rem; /* tamanho da frase */
+    --botao-fonte: 1.05rem;   /* tamanho do botão */
+    --tela-gap: 1.8rem;       /* espaço entre os itens */
+    --tela-desce: 0rem;
+    --faixa-altura: 5rem;     /* altura da faixa */
+    padding: 2.6rem 0 2.6rem; /* o azul continua ocupando a tela inteira */
+  }
+  .faixa__trilho { gap: 2rem; }
+  .faixa__nome { font-size: 2.6rem; }
+  .faixa__peca { height: 3.2rem; }
+}

@@ -221,3 +221,8 @@
   .manequim__cursor,
   .manequim__cursor--visivel { transition: none; }
 }
+
+@media (max-width: 800px) {
+  .manequim__seta { left: 86%; width: 11vw; }
+  .manequim__seta--esq { left: 14%; }
+}

@@ -234,85 +234,49 @@
 }
 
 /* ================= CELULAR: popup dos 3 cards =================
-   Os cards viram uma fileira que se desliza para o lado (um de cada vez, bem maiores).
-   A moldura em imagem sai (ela é larga demais para o celular) e entra um painel feito em CSS.
-   O botão Garimpar some: para fechar, é só tocar fora do painel. */
+   Mesma moldura e os 3 cards lado a lado; só ajusta tamanhos e letras para a tela pequena.
+   O botão Garimpar some: para fechar, é só tocar fora do popup. */
 @media (max-width: 800px) {
   :root {
-    --cp-m-largura: 92vw;     /* largura do painel */
-    --cp-m-card: 66vw;        /* largura de cada card */
-    --cp-m-titulo: 4.6vw;     /* título do topo */
-    --cp-m-texto: 3.6vw;      /* frase de baixo */
-    --cp-m-q: 1.2vw;          /* tamanho do degrau dos cantos */
+    /* área do conteúdo dentro da moldura */
+    --cp-esq: 4%;
+    --cp-dir: 4%;
+    --cp-topo: 8%;
+    --cp-base: 8%;
+
+    --cp-card-w: calc(var(--cp-largura) * 0.255);  /* largura de cada card */
+    --cp-gap: calc(var(--cp-largura) * 0.03);      /* espaço entre os cards */
+
+    --cp-titulo: 3.5vw;    /* título do topo */
+    --cp-texto: 3vw;     /* frase de baixo */
   }
 
-  .cards-pop__caixa {
-    width: var(--cp-m-largura);
-    padding: 6vw 0 9vw;
-    background: var(--ui-papel, #f6f4f8);
-    --q: var(--cp-m-q);
-    clip-path: polygon(
-      calc(var(--q) * 2) 0, calc(100% - var(--q) * 2) 0, calc(100% - var(--q) * 2) var(--q),
-      calc(100% - var(--q)) var(--q), calc(100% - var(--q)) calc(var(--q) * 2), 100% calc(var(--q) * 2),
-      100% calc(100% - var(--q) * 2), calc(100% - var(--q)) calc(100% - var(--q) * 2),
-      calc(100% - var(--q)) calc(100% - var(--q)), calc(100% - var(--q) * 2) calc(100% - var(--q)),
-      calc(100% - var(--q) * 2) 100%, calc(var(--q) * 2) 100%, calc(var(--q) * 2) calc(100% - var(--q)),
-      var(--q) calc(100% - var(--q)), var(--q) calc(100% - var(--q) * 2), 0 calc(100% - var(--q) * 2),
-      0 calc(var(--q) * 2), var(--q) calc(var(--q) * 2), var(--q) var(--q), calc(var(--q) * 2) var(--q)
-    );
-  }
-  /* faixa azul clara na base, como nos cartões do site */
-  .cards-pop__caixa::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 4.5vw;
-    background: var(--ui-faixa-cartao, #b8c8ff);
-  }
-  .cards-pop__moldura { display: none; }
-
-  .cards-pop__conteudo {
-    position: static;
-    gap: 4vw;
-  }
-
-  /* título: troca "Passe o mouse" por "Deslize e toque" (o texto original fica escondido) */
+  /* título: troca "Passe o mouse" por "Toque nos cards" (o texto original fica escondido) */
   .cp-titulo { font-size: 0; line-height: 0; translate: none; }
   .cp-titulo::after {
-    content: "Deslize e toque nos cards\Apara conhecer cada RECORTE";
+    content: "Toque nos cards\Apara conhecer cada RECORTE";
     display: block;
     white-space: pre;
-    font-size: var(--cp-m-titulo);
-    line-height: 1.3;
+    font-size: var(--cp-titulo);
+    line-height: 1.25;
   }
 
-  /* fileira de cards que desliza; cada card "gruda" no centro */
-  .cp-cards {
-    justify-content: flex-start;
-    gap: 5vw;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding: 3vw calc((var(--cp-m-largura) - var(--cp-m-card)) / 2);
-    scroll-padding-inline: calc((var(--cp-m-largura) - var(--cp-m-card)) / 2);
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .cp-cards::-webkit-scrollbar { display: none; }
-  .cp-card { flex: none; scroll-snap-align: center; }
-  :root { --cp-card-w: var(--cp-m-card); }
-
-  /* letras maiores dentro dos cards */
-  .cp-frente__texto h3 { font-size: 1.2em; }
-  .cp-frente__p p { font-size: 0.95em; }
-  .cp-verso__p p { font-size: 1.02em; }
+  /* letras maiores dentro dos cards (1em = 1/20 da largura do card) */
+  .cp-frente__texto { left: 6%; right: 6%; }
+  .cp-frente__texto h3 { font-size: 1.5em; margin-bottom: 0.15em; }
+  .cp-frente__p p { font-size: 1.15em; line-height: 1.25; }
+  .cp-verso__texto h3 { font-size: 2em; margin-bottom: 0.5em; }
+  .cp-verso__p { gap: 0.6em; }
+  .cp-verso__p p { font-size: 1.25em; line-height: 1.3; }
+  .cp-card--garimpar .cp-verso__texto,
+  .cp-card--conhecer .cp-verso__texto,
+  .cp-card--criar .cp-verso__texto { --vp: 8%; }
 
   /* frase de baixo: maior, e "? Ajuda" vira só o texto Ajuda */
-  .cp-rodape { font-size: var(--cp-m-texto); translate: none; gap: 0; padding: 0 5vw; }
+  .cp-rodape { font-size: var(--cp-texto); translate: none; gap: 0; }
   .cp-pill { font-size: 0; padding: 0; border: 0; background: none; }
-  .cp-pill::after { content: "Ajuda"; font-size: var(--cp-m-texto); font-weight: 800; color: var(--cp-azul); }
+  .cp-pill::after { content: "Ajuda"; font-size: var(--cp-texto); font-weight: 800; color: var(--cp-azul); }
 
-  /* sem botão Garimpar: toque fora do painel para fechar */
+  /* sem botão Garimpar: toque fora do popup para fechar */
   .cp-botao { display: none; }
 }
