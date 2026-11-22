@@ -188,15 +188,18 @@ body { font-family: "Montserrat", sans-serif; }
 /* ================= CELULAR ================= */
 @media (max-width: 800px) {
   .tela {
-    --logo-largura: 84%;      /* tamanho do RE.CORTE */
-    --frase-tamanho: 1.15rem; /* tamanho da frase */
-    --botao-fonte: 1.05rem;   /* tamanho do botão */
-    --tela-gap: 1.8rem;       /* espaço entre os itens */
+    --logo-largura: 64%;       /* tamanho do RE.CORTE */
+    --frase-tamanho: 1.05rem;  /* tamanho da frase */
+    --botao-fonte: 1rem;       /* tamanho do botão */
+    --tela-gap: 1.1rem;        /* espaço entre os itens */
     --tela-desce: 0rem;
-    --faixa-altura: 5rem;     /* altura da faixa */
-    padding: 2.6rem 0 2.6rem; /* o azul continua ocupando a tela inteira */
+    --faixa-altura: 3.6rem;    /* altura da faixa */
+    min-height: 0;             /* o azul não estica até o fim da tela */
+    padding: 3.4rem 0 2.4rem;  /* espaço em cima e embaixo do azul */
   }
-  .faixa__trilho { gap: 2rem; }
-  .faixa__nome { font-size: 2.6rem; }
-  .faixa__peca { height: 3.2rem; }
+  .capa__botao--conjunto { width: 20%; left: -18%; top: 80%; }
+  .capa__botao--escuro   { width: 8%;  left: 110%; top: -22%; }
+  .faixa__trilho { gap: 1.6rem; }
+  .faixa__nome { font-size: 2rem; }
+  .faixa__peca { height: 2.6rem; }
 }

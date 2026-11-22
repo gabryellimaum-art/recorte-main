@@ -273,7 +273,7 @@
   .cp-card--criar .cp-verso__texto { --vp: 8%; }
 
   /* frase de baixo: maior, e "? Ajuda" vira só o texto Ajuda */
-  .cp-rodape { font-size: var(--cp-texto); translate: 0 1.8vw; gap: 0; }
+  .cp-rodape { font-size: var(--cp-texto); translate: 0 1vw; gap: 0; }
   .cp-pill { font-size: 0; padding: 0; border: 0; background: none; }
   .cp-pill::after { content: "Ajuda"; font-size: var(--cp-texto); font-weight: 800; color: var(--cp-azul); }
 
