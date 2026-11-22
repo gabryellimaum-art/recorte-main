@@ -101,3 +101,7 @@
   /* outline: 2px dashed red; */
 }
 .rodape__alvo--tesoura { left: 13.5%; top: -18%; width: 18%; height: 42%; }
+
+@media (max-width: 800px) {
+  .rodape__corte { top: 0.25rem; }   /* sobe a linha tracejada */
+}

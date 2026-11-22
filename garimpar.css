@@ -190,7 +190,7 @@ body { font-family: "Montserrat", sans-serif; }
   .tela {
     --logo-largura: 64%;       /* tamanho do RE.CORTE */
     --frase-tamanho: 1.05rem;  /* tamanho da frase */
-    --botao-fonte: 1rem;       /* tamanho do botão */
+    --botao-fonte: 0.88rem;       /* tamanho do botão */
     --tela-gap: 1.1rem;        /* espaço entre os itens */
     --tela-desce: 0rem;
     --faixa-altura: 3.6rem;    /* altura da faixa */
@@ -198,7 +198,7 @@ body { font-family: "Montserrat", sans-serif; }
     padding: 3.4rem 0 2.4rem;  /* espaço em cima e embaixo do azul */
   }
   .capa__botao--conjunto { width: 20%; left: -18%; top: 80%; }
-  .capa__botao--escuro   { width: 8%;  left: 110%; top: -22%; }
+  .capa__botao--escuro   { width: 10.5%; left: 104%; top: -24%; }
   .faixa__trilho { gap: 1.6rem; }
   .faixa__nome { font-size: 2rem; }
   .faixa__peca { height: 2.6rem; }
