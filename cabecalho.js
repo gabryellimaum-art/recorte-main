@@ -102,6 +102,31 @@
   nav.appendChild(esq);
   nav.appendChild(tesoura);
   nav.appendChild(dir);
+  /* celular: botão de 3 risquinhos abre e fecha o menu (no computador ele fica escondido pelo CSS) */
+  nav.id = "cab-nav";
+  var hamb = el("button", "cab-hamburguer", {
+    type: "button", "aria-label": "Abrir menu", "aria-expanded": "false", "aria-controls": "cab-nav"
+  });
+  for (var h = 0; h < 3; h++) hamb.appendChild(el("span", "", { "aria-hidden": "true" }));
+  function menuAberto(aberto) {
+    cabecalho.classList.toggle("cabecalho--aberto", aberto);
+    hamb.setAttribute("aria-expanded", aberto ? "true" : "false");
+    hamb.setAttribute("aria-label", aberto ? "Fechar menu" : "Abrir menu");
+  }
+  hamb.addEventListener("click", function () {
+    menuAberto(!cabecalho.classList.contains("cabecalho--aberto"));
+  });
+  nav.addEventListener("click", function (e) {            /* escolheu um link ou Ajustes: fecha o menu */
+    if (e.target.closest("a, [data-acess-abrir]")) menuAberto(false);
+  });
+  document.addEventListener("click", function (e) {       /* tocou fora da barra: fecha */
+    if (!cabecalho.contains(e.target)) menuAberto(false);
+  }, true);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") menuAberto(false);
+  });
+
+  cabecalho.appendChild(hamb);
   cabecalho.appendChild(nav);
   document.body.insertBefore(cabecalho, document.body.firstChild);
 

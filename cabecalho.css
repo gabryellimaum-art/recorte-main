@@ -163,3 +163,59 @@ html[data-tema="escuro"] .cab-botao:focus-visible,
 html[data-tema="escuro"] .cab-botao:active {
   border-image-source: url("img/garimpar/nav/4x/botao-moldura-normal-noturno@4x.png");
 }
+
+/* ================= CELULAR: menu de 3 risquinhos ================= */
+.cab-hamburguer { display: none; }
+
+@media (max-width: 800px) {
+  .cabecalho { padding: 0.3rem 0; }
+
+  .cab-hamburguer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 3.4rem;
+    height: 2.5rem;
+    margin: 0 auto;
+    padding: 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+  .cab-hamburguer span { display: block; width: 1.8rem; height: 4px; background: var(--ui-texto, #000); }
+  .cab-hamburguer:focus-visible { outline: 3px solid var(--azul); outline-offset: 2px; }
+
+  /* o menu abre por cima da página, em coluna */
+  .cabecalho__nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.9rem;
+    padding: 1rem 8vw 1.3rem;
+    background: var(--ui-fundo, #fff);
+    border-bottom: 4px solid var(--azul);
+    max-height: calc(100vh - 3.5rem);
+    overflow-y: auto;
+  }
+  .cabecalho--aberto .cabecalho__nav { display: flex; }
+
+  .cabecalho__tesoura { order: -1; align-self: center; height: 3rem; margin: 0; }
+  .cabecalho .cab-botao { font-size: 1.05rem; box-sizing: border-box; }
+
+  /* lista das 3 coleções: aparece embaixo do botão Coleções, sem flutuar */
+  .cabecalho__menu {
+    position: static;
+    transform: none;
+    min-width: 0;
+    margin-top: 0.7rem;
+  }
+
+  /* o botão Voltar fixo atrapalha no celular */
+  .cab-voltar { display: none; }
+}
