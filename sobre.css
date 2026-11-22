@@ -1,0 +1,505 @@
+/* =========================================================
+   SOBRE (QUEM SOMOS)
+
+   PAINEL DE AJUSTES (logo abaixo):
+   Regra geral: 1vw = 1% da largura da tela.
+   Número maior = mais espaço / mais pra direita / mais pra baixo.
+   Número negativo (ex: -1vw) = vai para o lado contrário.
+   Mude UM valor, Ctrl+S, Ctrl+F5 e veja o resultado.
+   ========================================================= */
+:root {
+  /* ---------- CORES ---------- */
+  --azul: #1557ff;
+  --lima: #c8f000;
+  --fundo: #f6f4f8;
+  --topo-fundo: #ffffff;          /* cor do bloco "Quem somos?" (igual à barra do menu) */
+
+  /* ---------- MARGENS GERAIS ---------- */
+  --espaco: 7.8vw;                /* ESPAÇO PADRÃO entre um bloco e outro (o "quadrado" da grid). Mude aqui e todos mudam */
+  --recuo: 6.5vw;                 /* margem esquerda/direita de tudo */
+  --col-dir: 58.5vw;              /* onde começa a coluna da direita: igual nos 3 blocos (= 100vw - recuo - --q-dir) */
+
+  /* ---------- TOPO "QUEM SOMOS?" ---------- */
+  --topo-cima: 6vw;               /* espaço entre a linha tracejada de cima e o título QUEM SOMOS? */
+  --topo-baixo: 6vw;              /* espaço entre o subtítulo e a linha tracejada de baixo */
+  --selo-titulo: 4.9vw;           /* distância CONHECER > título */
+  --titulo-subtitulo: 2vw;        /* distância título > subtítulo */
+
+  /* ---------- 4 BLOCOS + ROLO DE LINHA ---------- */
+  --q-esq: 31.8vw;                /* largura da coluna da esquerda (título + frase "AQUI, A ROUPA") */
+  --q-dir: 31.8vw;                  /* largura da coluna da direita (texto + frase "CADA PEÇA") */
+  --q-linha: 1.5vw;               /* espaço entre os blocos de cima e as duas frases de baixo */
+  --frase-y: 1.8vw;               /* desce (+) ou sobe (-) só as duas frases de baixo */
+  --quadro-baixo: 0vw;          /* espaço depois das frases, antes de "De onde veio" */
+  --rolo-w: clamp(7rem, 11.9vw, 15rem);  /* TAMANHO do rolo de linha */
+  --rolo-x: 3.5vw;               /* rolo: positivo = direita, negativo = esquerda */
+  --rolo-y: 6vw;                /* rolo: positivo = desce, negativo = sobe */
+
+  /* ---------- DE ONDE VEIO / UPCYCLING / JORNADA ---------- */
+  --inspiracao-topo: var(--espaco);       /* espaço acima de "De onde veio a inspiração?" */
+    --inspiracao-texto-y: 3vw;      /* espaço entre o título e os 2 textos abaixo dele */
+  --upc-titulo-desce: 6vw;        /* desce o título "O QUE É UPCYCLING?" (sozinho, para alinhar com a fita) */
+  --upc-titulo-y: -103vw;            /* espaço entre o título e o 1º parágrafo (era var(--espaco), 7.8vw) */
+  --upcycling-y: 4vw;             /* espaço acima de "O que é upcycling?" (menor = bloco sobe) */
+  --jornada-y: var(--espaco);               /* espaço acima de "Sua jornada no RE.CORTE" */
+  --upc-titulo-y: var(--espaco);  /* espaço entre "O QUE É UPCYCLING?" e os textos */
+  --foto-largura: 44vw;       /* largura da moldura da foto do upcycling */
+  --foto-y: -1vw;              /* sobe (negativo) ou desce (positivo) */
+  --sombra: 1.8vw;            /* grossura da borda laranja de trás da foto */
+  --fita: 2.1vw;              /* grossura das fitas (card e foto) */
+
+  /* ---------- CARDS DA JORNADA ---------- */
+  --card-largura: clamp(15rem, 21vw, 26rem);
+  --texto-garimpar: 66%;          /* onde começa o texto dentro de cada card (maior = desce) */
+  --texto-conhecer: 69.6%;
+  --texto-criar: 69.4%;
+  --espaco-fecho: var(--espaco);            /* espaço ACIMA e ABAIXO da frase "Essa jornada cria..." (centraliza) */
+
+  /* ---------- TRÊS COLEÇÕES (mini cards) ---------- */
+  --minicards-y: var(--espaco);           /* espaço entre o título e os 3 cards (maior = cards descem) */
+  --colecoes-fecho-y: 4.5vw;      /* espaço entre os cards e a frase "Cada coleção abre..." */
+
+  /* ---------- PALAVRAS-CHAVE ---------- */
+  --azul-fim: 6.5vw;                /* espaço azul que sobra depois das palavras-chave, até o bloco azul acabar */
+  --palavras-lista-y: 5vw;        /* espaço entre "NOSSAS PALAVRAS-CHAVE:" e a lista de palavras */
+  --palavras-y: var(--espaco);            /* espaço acima de "Nossas palavras-chave" (menor = bloco sobe) */
+}
+
+/* ================= BASE ================= */
+*, *::before, *::after { box-sizing: border-box; }
+body.sobre {
+  margin: 0;
+  background: var(--fundo);
+  font-family: "Montserrat", sans-serif;
+  color: var(--azul);
+  overflow-x: clip;
+}
+.sobre strong { font-weight: 700; }
+
+.sobre__texto {
+  margin: 0;
+  font-size: clamp(0.9rem, 1.1vw, 1.2rem);
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.sobre__h2 {
+  margin: 0 0 clamp(1rem, 1.6vw, 2rem);
+  font-family: var(--fonte-titulo, "Montserrat", sans-serif);
+  font-weight: 400;
+  font-size: clamp(1.8rem, 3.6vw, 4.4rem);
+  line-height: 1.05;
+  color: #fff;
+  white-space: nowrap;
+}
+.sobre__h2--azul { color: var(--azul); }
+/* títulos centralizados (Três coleções / Palavras-chave) */
+.sobre__h2--recuo { text-align: center; }
+
+/* ================= TOPO ================= */
+.sobre__corte {
+  height: calc(0.9vw + 0.45rem);
+  background-color: var(--topo-fundo);
+  background-image: repeating-linear-gradient(90deg, var(--azul) 0 1.6vw, transparent 1.6vw 3.2vw);
+  background-size: 100% 0.45rem;
+  background-position: 0 0.9vw;
+  background-repeat: no-repeat;
+}
+.sobre__topo {
+  background: var(--topo-fundo);
+  text-align: center;
+  padding: var(--topo-cima) 1rem 0;
+}
+/* linha tracejada de baixo, igual à de cima */
+.sobre__topo::after {
+  content: "";
+  display: block;
+  margin: var(--topo-baixo) -1rem 0;
+  height: calc(0.9vw + 0.45rem);
+  background-image: repeating-linear-gradient(90deg, var(--azul) 0 1.6vw, transparent 1.6vw 3.2vw);
+  background-size: 100% 0.45rem;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+}
+.sobre__selo {
+  position: relative;
+  display: inline-block;
+  margin-bottom: var(--selo-titulo);
+}
+.sobre__selo img { filter: url(#pinta-azul); }
+.sobre__selo-texto { display: block; width: clamp(7rem, 11vw, 13rem); image-rendering: pixelated; }
+.sobre__selo-estrela { position: absolute; width: clamp(.7rem, 1.2vw, 1.4rem); image-rendering: pixelated; }
+.sobre__selo-estrela--esq { left: -2.14vw; bottom: 0; }
+.sobre__selo-estrela--dir { right: -1.8vw; top: -0.85vw; }
+.sobre__titulo {
+  margin: 0;
+  font-family: var(--fonte-titulo, "Montserrat", sans-serif);
+  font-weight: 400;
+  font-size: clamp(3rem, 8.7vw, 10rem);
+  line-height: 1;
+  color: var(--azul);
+}
+.sobre__subtitulo {
+  margin: var(--titulo-subtitulo) 0 0;
+  font-size: clamp(1rem, 1.7vw, 2rem);
+  font-weight: 700;
+  color: var(--azul);
+}
+
+/* ================= BLOCO AZUL ================= */
+.sobre__azul {
+  background: var(--azul);
+  color: #fff;
+  padding: clamp(3rem, 5vw, 6rem) 0 var(--azul-fim);
+}
+.sobre__azul > section { padding-inline: var(--recuo); }
+
+/* ---------- 4 blocos + rolo ---------- */
+.sobre__quadro {
+  --q-vao: calc(100vw - 2 * var(--recuo) - var(--q-esq) - var(--q-dir));
+  display: grid;
+  grid-template-columns: var(--q-esq) var(--q-dir);
+  grid-template-rows: auto auto;
+  justify-content: space-between;
+  row-gap: var(--q-linha);
+  padding-block: clamp(1rem, 2vw, 2rem) var(--quadro-baixo);
+}
+.sobre__chamada {
+  grid-area: 1 / 1;
+  align-self: start;
+  margin: 0;
+  font-size: clamp(1.5rem, 2.45vw, 3.2rem);
+  line-height: 1.1;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.sobre__quadro .sobre__texto { grid-area: 1 / 2; align-self: start; }
+.sobre__rolo {
+  grid-area: 1 / 1 / 2 / 3;
+  justify-self: start;
+  align-self: start;
+  display: block;
+  width: var(--rolo-w);
+  margin-left: calc(var(--q-esq) + var(--q-vao) / 2 - var(--rolo-w) / 2 + var(--rolo-x));
+  margin-top: var(--rolo-y);
+  image-rendering: pixelated;
+}
+.sobre__frase {
+  grid-row: 2;
+  align-self: start;
+  justify-self: start;
+  width: max-content;
+  margin: var(--frase-y) 0 0;
+  text-align: left;
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-family: var(--fonte-titulo, "Montserrat", sans-serif);
+  font-size: clamp(0.9rem, 1.3vw, 1.7rem);
+  line-height: 1.05;
+}
+.sobre__frase--esq { grid-column: 1; }
+.sobre__frase--dir { grid-column: 2; }
+
+/* ---------- De onde veio / Upcycling ---------- */
+.sobre__duas-colunas {
+  display: grid;
+  grid-template-columns: 34vw var(--q-dir);
+  column-gap: calc(var(--col-dir) - var(--recuo) - 34vw);
+}
+.sobre__duas-colunas:not(.sobre__duas-colunas--upcycling) {
+  grid-template-areas:
+    "titulo titulo"
+    "esq    dir";
+  padding: var(--inspiracao-topo) var(--recuo) 0;
+}
+.sobre__duas-colunas > .sobre__h2 { grid-area: titulo; margin-bottom: var(--inspiracao-texto-y); }
+/* "De onde veio a inspiração?": uma linha só, centralizada */
+.sobre__duas-colunas:not(.sobre__duas-colunas--upcycling) > .sobre__h2 { justify-self: center; text-align: center; }
+.sobre__texto--esq { grid-area: esq; }
+.sobre__texto--dir { grid-area: dir; }
+
+.sobre__duas-colunas--upcycling {
+  grid-template-areas: "reserva dir";
+  padding: var(--upcycling-y) var(--recuo) 0;
+}
+.sobre__reserva { grid-area: reserva; }                 /* espaço vazio da esquerda (ainda sem conteúdo) */
+.sobre__coluna-dir { grid-area: dir; }
+.sobre__coluna-dir .sobre__texto { margin-bottom: clamp(1.4rem, 2.2vw, 2.8rem); }
+.sobre__coluna-dir .sobre__texto:last-child { margin-bottom: 0; }
+.sobre__coluna-dir .sobre__h2 {
+  margin-top: 3vw;
+  margin-bottom: 3vw !important;
+}
+
+/* ---------- Jornada ---------- */
+.sobre__jornada { padding-top: var(--jornada-y); }
+/* título e frase da jornada: corridos e centralizados */
+.sobre__jornada .sobre__h2,
+.sobre__jornada .sobre__texto--intro { text-align: center; }
+.sobre__texto--intro { max-width: none; }
+
+.sobre__cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(2rem, 7vw, 9rem);
+  margin-top: var(--espaco);              /* espaço entre a frase da jornada e os 3 cards */
+}
+.jcard {
+  --texto-top: 66%;
+  position: relative;
+  width: var(--card-largura);
+  font-size: calc(var(--card-largura) / 20);
+}
+.jcard--garimpar { --texto-top: var(--texto-garimpar); }
+.jcard--conhecer { --texto-top: var(--texto-conhecer); }
+.jcard--criar    { --texto-top: var(--texto-criar); }
+/* os 3 cards com a mesma altura. Se re-exportar o card Garimpar com a mesma altura dos outros, pode apagar a linha aspect-ratio */
+.jcard > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 402 / 578;
+  object-fit: fill;
+  image-rendering: pixelated;
+}
+.jcard__texto {
+  position: absolute;
+  left: 9%;
+  right: 9%;
+  top: var(--texto-top);
+  text-align: center;
+  color: var(--azul);
+}
+.jcard__texto h3 { margin: 0 0 0.4em; font-size: 1.15em; font-weight: 700; }
+.jcard__texto p  { margin: 0; font-size: 0.85em; line-height: 1.3; }
+
+/* frases finais */
+.sobre__fecho {
+  margin: clamp(2rem, 4vw, 5rem) auto 0;
+  text-align: center;
+  white-space: nowrap;
+  font-size: clamp(1rem, 1.6vw, 2rem);
+  line-height: 1.2;
+  font-weight: 700;
+}
+.sobre__fecho--jornada { margin-top: var(--espaco-fecho); font-size: clamp(1rem, 1.5vw, 1.9rem); }
+
+/* ---------- Três coleções ---------- */
+.sobre__colecoes { padding-top: var(--espaco-fecho); }
+.sobre__colecoes .sobre__h2 { font-size: clamp(1.5rem, 3.6vw, 4.4rem); }
+.sobre__minicards {
+  display: flex;
+  justify-content: space-between;
+  gap: 2vw;
+  margin-top: var(--minicards-y);
+}
+.sobre__minicard { display: block; width: 21vw; transition: transform .18s steps(4); }
+.sobre__minicard img { display: block; width: 100%; height: auto; image-rendering: pixelated; }
+.sobre__minicard:hover,
+.sobre__minicard:focus-visible { transform: translateY(-6px) scale(1.03); }
+.sobre__colecoes .sobre__fecho { margin-top: var(--colecoes-fecho-y); font-weight: 400; }
+
+/* ---------- Palavras-chave ---------- */
+.sobre__palavras { padding-top: var(--palavras-y); }
+.sobre__lista {
+  list-style: none;
+  margin: var(--palavras-lista-y) 0 0;
+  padding: 0 3vw;
+}
+.sobre__lista li {
+  display: grid;
+  grid-template-columns: 5vw 1fr 34vw;   /* seta | palavra | texto */
+  align-items: center;
+  margin-bottom: clamp(2rem, 3.4vw, 4.4rem);
+}
+.sobre__lista li:last-child { margin-bottom: 0; }
+.sobre__seta {
+  width: 3.8vw;
+  height: auto;
+  image-rendering: pixelated;
+  transform: translate(-1.4vw, -0.45vw);  /* esquerda e cima */
+}
+.sobre__palavra {
+  font-family: var(--fonte-titulo, "Montserrat", sans-serif);
+  font-size: clamp(1.5rem, 3.3vw, 4.2rem);
+  line-height: 1;
+}
+
+/* ===== INTEGRANTES ===== */
+:root {
+  --int-largura: 46vw;        /* largura de cada card */
+  --int-gap: 5vw;             /* espaço vertical entre cards */
+  --int-borda: 3vw;           /* distância dos cards até a borda da tela */
+  --int-foto: 12vw;           /* tamanho da foto */
+  --int-nome: 2.2vw;          /* tamanho do nome */
+  --int-texto: 1.15vw;        /* tamanho do texto */
+  --int-fundo: 4vw;           /* espaço depois do último card */
+  --int-laranja: #ff5a1f;
+
+  /* formato dos cantos em escada (usado nas duas molduras) */
+  --escada: polygon(
+    0.8vw 0, calc(100% - 0.8vw) 0, calc(100% - 0.8vw) 0.4vw,
+    calc(100% - 0.4vw) 0.4vw, calc(100% - 0.4vw) 0.8vw, 100% 0.8vw,
+    100% calc(100% - 0.8vw), calc(100% - 0.4vw) calc(100% - 0.8vw),
+    calc(100% - 0.4vw) calc(100% - 0.4vw), calc(100% - 0.8vw) calc(100% - 0.4vw),
+    calc(100% - 0.8vw) 100%, 0.8vw 100%, 0.8vw calc(100% - 0.4vw),
+    0.4vw calc(100% - 0.4vw), 0.4vw calc(100% - 0.8vw), 0 calc(100% - 0.8vw),
+    0 0.8vw, 0.4vw 0.8vw, 0.4vw 0.4vw, 0.8vw 0.4vw
+  );
+}
+
+/* ===== INTEGRANTES (versão 2) ===== */
+:root {
+  --int-fundo: calc(var(--espaco) * 1.4);   /* espaço entre o último card e o rodapé (maior = mais espaço) */
+}
+
+/* texto de apresentação e título: ajuste se a classe do seu HTML for outra */
+.sobre__integrantes {
+  padding: 5vw 0 0;
+}
+
+.sobre__integrantes > p {
+  width: 60vw;                 /* ajuste a largura como preferir */
+  margin: 0 auto 4vw;          /* auto nas laterais centraliza o bloco */
+  text-align: center;          /* centraliza as linhas do texto */
+  font-size: 1.05vw;
+  line-height: 1.4;
+}
+
+.sobre__integrantes > h2 {
+  margin: 0 0 4vw;
+  text-align: center;                 /* CONHEÇA OS INTEGRANTES: centralizado, numa linha só */
+}
+
+.integrantes {
+  padding: 0 0 var(--int-fundo);
+}
+
+.integrantes__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--int-gap);
+  padding: 0 var(--int-borda);
+}
+
+/* ---- card ---- */
+.integrante {
+  position: relative;
+  isolation: isolate;
+  width: var(--int-largura);
+  display: flex;
+  align-items: center;
+  gap: 3vw;
+  padding: 3vw 3.2vw 3.6vw;
+}
+
+/* camada 1: laranja em escada */
+.integrante::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: var(--int-laranja);
+  clip-path: var(--escada);
+}
+
+/* camada 2: miolo claro, também em escada, com faixa lilás embaixo */
+.integrante::after {
+  content: "";
+  position: absolute;
+  inset: 0.45vw 0.45vw 0.9vw;
+  z-index: -1;
+  clip-path: var(--escada);
+  background:
+    linear-gradient(#aec4ff, #aec4ff) left bottom / 100% 0.55vw no-repeat,
+    #f6f4f8;
+}
+
+/* fitinha azul (presa ao bloco de texto, fica sobre a borda do topo) */
+.integrante__texto::before {
+  content: "";
+  position: absolute;
+  top: -0.9vw;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 7vw;
+  height: var(--fita);
+  background: linear-gradient(#5b86ff 68%, #4a63c8 68%);
+}
+
+.integrante:nth-child(odd)  { margin-right: auto; }
+.integrante:nth-child(even) { margin-left: auto; flex-direction: row-reverse; }
+
+.integrante__foto {
+  width: var(--int-foto);
+  height: auto;
+  flex: none;
+  image-rendering: pixelated;
+  display: block;
+}
+
+.integrante__texto p {
+  margin: 0 0 1vw;
+  font-size: var(--int-texto);
+  line-height: 1.35;
+  color: #2b2b2b;
+}
+
+.integrante__nome {
+  font-family: var(--fonte-titulo);
+  font-weight: 400;
+  font-size: var(--int-nome);
+  color: var(--int-laranja);
+  margin: 0 0 1.4vw;
+}
+
+.integrante__frase {
+  font-style: italic;
+  margin-bottom: 0 !important;
+}
+
+/* ---- moldura da foto do upcycling ---- */
+.sobre__reserva {
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  align-self: center;                                 /* centralizada na altura do título + textos */
+  translate: 0 var(--foto-y);
+  width: var(--foto-largura);
+  margin-left: calc(-1 * var(--recuo) - 1vw);         /* encosta na borda esquerda da tela */
+  padding: 4.6vw calc(var(--sombra) + 3.6vw) calc(var(--sombra) + 3vw) 4.6vw;
+}
+
+.sobre__reserva::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -0.6vw;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  clip-path: var(--escada);
+  background:
+    linear-gradient(#aec4ff, #aec4ff) left bottom var(--sombra) / calc(100% - var(--sombra)) 0.8vw no-repeat,
+    linear-gradient(#f6f4f8, #f6f4f8) left bottom var(--sombra) / calc(100% - var(--sombra)) calc(100% - 0.6vw - var(--sombra)) no-repeat,
+    var(--int-laranja);
+}
+
+/* fitinha verde/amarela */
+.sobre__reserva::after {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--fita) - 0.2vw);
+  left: 32%;
+  width: 27%;
+  height: var(--fita);
+  background: linear-gradient(#9bc23c 65%, #d9c21a 65%);
+}
+
+.sobre__reserva img {
+  width: 100%;
+  height: auto;
+  display: block;
+}

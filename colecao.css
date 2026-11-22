@@ -1,0 +1,833 @@
+/* ================= PÁGINA DE COLEÇÃO (vale para as três) ================= */
+:root {
+  --azul: #1557ff;
+  --lima: #c8f000;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background: var(--ui-papel, #f6f4f8);
+  color: var(--ui-corpo, #1a1a2e);
+}
+
+/* cor de cada coleção */
+.colecao--arretado   { --cor-colecao: #ff5a1f; --cor-colecao-texto: #ff5a1f; }
+.colecao--faveleiras { --cor-colecao: #ff2e8a; --cor-colecao-texto: #ff2e8a; }
+.colecao--raizes     { --cor-colecao: #7628ff; --cor-colecao-texto: #7628ff; }
+/* --cor-colecao       = fundos, molduras, faixas (nunca muda)
+   --cor-colecao-texto = texto colorido (acessibilidade.css clareia no modo escuro) */
+
+/* linha de recorte logo abaixo do cabeçalho */
+.colecao__corte {
+  height: 0.4rem;
+  margin: 0.5rem 0 1.2rem;
+  background: repeating-linear-gradient(90deg, var(--cor-colecao) 0 1.75rem, transparent 1.75rem 3.5rem);
+}
+
+/* ================= TOPO COLORIDO ================= */
+.colecao__topo {
+  background: var(--cor-colecao);
+  color: #fff;
+  text-align: center;
+  padding: clamp(3rem, 7vw, 7rem) 1rem clamp(3rem, 6vw, 6rem);
+}
+
+/* selo "CONHECER" com as duas estrelinhas */
+.colecao__selo {
+  position: relative;
+  display: inline-block;
+}
+.colecao__selo-texto {
+  display: block;
+  width: clamp(5.5rem, 11vw, 12rem);
+  height: auto;
+  image-rendering: pixelated;
+}
+.colecao__selo-estrela {
+  position: absolute;
+  width: 12%;
+  height: auto;
+  translate: -50% -50%;
+  image-rendering: pixelated;
+}
+.colecao__selo-estrela--esq { left: -14%; top: 70%; }
+.colecao__selo-estrela--dir { left: 112%; top: -20%; }
+
+.colecao__titulo {
+  margin-top: clamp(1.6rem, 5vw, 5.5rem);
+  font-family: var(--fonte-titulo);
+  font-weight: 400;
+  font-size: clamp(3rem, 8vw, 9rem);
+  line-height: 1;
+}
+.colecao__subtitulo {
+  margin-top: clamp(1rem, 2.5vw, 3rem);
+  font-weight: 700;
+  font-size: clamp(1rem, 1.5vw, 1.6rem);
+}
+
+/* ================= INTRODUÇÃO ================= */
+.colecao__intro {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: clamp(2rem, 6vw, 8rem);
+  padding: clamp(3rem, 6vw, 6rem) 6vw;
+}
+.colecao__intro p {
+  font-size: clamp(0.9rem, 1.1vw, 1.2rem);
+  line-height: 1.4;
+}
+.colecao__intro strong {
+  font-weight: 800;
+  color: var(--cor-colecao-texto);
+}
+.colecao__intro-img {
+  display: block;
+   width: clamp(8rem, 15vw, 17rem);
+  height: auto;
+  image-rendering: pixelated;
+}
+
+/* celular */
+@media (max-width: 800px) {
+  .colecao__intro {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: left;
+  }
+}
+/* ================= FAIXA COM FOTO ================= */
+.colecao__faixa {
+  --p: clamp(0.6rem, 1.4vw, 1.6rem);   /* tamanho do degrau das faixas laranja */
+  --g: linear-gradient(var(--cor-colecao), var(--cor-colecao));
+  position: relative;
+  height: clamp(16rem, 28vw, 34rem);
+  margin: calc(var(--p) * 2) 0;
+  background: #333;
+}
+
+.colecao__faixa-foto {
+  position: absolute;
+  left: 0;
+  top: calc(var(--p) * -1);
+  width: 100%;
+  height: calc(100% + var(--p) * 2);
+  object-fit: cover;
+  object-position: center 8%;
+  filter: grayscale(1) brightness(0.55);
+  /* a foto avança sob os degraus dos cantos */
+  clip-path: polygon(
+    0 0, calc(var(--p) * 2) 0, calc(var(--p) * 2) var(--p),
+    calc(100% - var(--p) * 2) var(--p), calc(100% - var(--p) * 2) 0, 100% 0,
+    100% 100%, calc(100% - var(--p) * 2) 100%, calc(100% - var(--p) * 2) calc(100% - var(--p)),
+    calc(var(--p) * 2) calc(100% - var(--p)), calc(var(--p) * 2) 100%, 0 100%
+  );
+}
+
+/* faixas laranja de cima e de baixo, com cantos em degrau */
+.colecao__faixa::before,
+.colecao__faixa::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: calc(var(--p) * 3);
+  z-index: 2;
+}
+.colecao__faixa::before {
+  top: calc(var(--p) * -2);
+  background:
+    var(--g) left calc(var(--p) * 2) top calc(var(--p) * 2) / calc(100% - var(--p) * 4) var(--p) no-repeat,
+    var(--g) left var(--p) top var(--p) / var(--p) var(--p) no-repeat,
+    var(--g) left 0 top 0 / var(--p) var(--p) no-repeat,
+    var(--g) right var(--p) top var(--p) / var(--p) var(--p) no-repeat,
+    var(--g) right 0 top 0 / var(--p) var(--p) no-repeat;
+}
+.colecao__faixa::after {
+  bottom: calc(var(--p) * -2);
+  background:
+    var(--g) left calc(var(--p) * 2) top 0 / calc(100% - var(--p) * 4) var(--p) no-repeat,
+    var(--g) left var(--p) top var(--p) / var(--p) var(--p) no-repeat,
+    var(--g) left 0 top calc(var(--p) * 2) / var(--p) var(--p) no-repeat,
+    var(--g) right var(--p) top var(--p) / var(--p) var(--p) no-repeat,
+    var(--g) right 0 top calc(var(--p) * 2) / var(--p) var(--p) no-repeat;
+}
+
+/* frase no centro da foto */
+.colecao__faixa-frase {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  z-index: 1;
+  width: 15em;
+  max-width: 90%;
+  text-align: center;
+  text-wrap: balance;
+  text-transform: uppercase;
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: clamp(1.3rem, 2.8vw, 3.2rem);
+  line-height: 1.1;
+  color: var(--cor-colecao);
+}
+
+/* ícone "i" e crédito da foto */
+.colecao__info {
+  position: absolute;
+  left: 8.5%;
+  top: 68%;
+  z-index: 3;
+  width: clamp(1.4rem, 2.5vw, 3rem);
+  padding: 0;
+  border: 0;
+  background: none;
+  line-height: 0;
+  cursor: pointer;
+}
+.colecao__info img {
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+.colecao__info:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+
+.colecao__credito {
+  position: absolute;
+  left: calc(8.5% + clamp(1.4rem, 2.5vw, 3rem) + 0.8rem);
+  top: 68%;
+  z-index: 3;
+  max-width: 22em;
+  padding: 0.5rem 0.9rem;
+  background: var(--ui-papel, #f6f4f8);
+  color: var(--ui-corpo, #1a1a2e);
+  border: 3px solid var(--ui-corpo, #111);
+  font-weight: 600;
+  font-size: clamp(0.75rem, 0.95vw, 1rem);
+  line-height: 1.35;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+.colecao__info:hover + .colecao__credito,
+.colecao__info:focus-visible + .colecao__credito {
+  opacity: 1;
+  visibility: visible;
+}
+/* ================= DEGRAUS NO INÍCIO DO BLOCO ================= */
+.colecao {
+  --p: clamp(0.6rem, 1.4vw, 1.6rem);
+  --g: linear-gradient(var(--cor-colecao), var(--cor-colecao));
+}
+.colecao__topo {
+  margin-top: 0.6rem;
+  /* cantos de cima em escada, colados no laranja */
+  clip-path: polygon(
+    0 calc(var(--p) * 2), var(--p) calc(var(--p) * 2), var(--p) var(--p),
+    calc(var(--p) * 2) var(--p), calc(var(--p) * 2) 0,
+    calc(100% - var(--p) * 2) 0, calc(100% - var(--p) * 2) var(--p),
+    calc(100% - var(--p)) var(--p), calc(100% - var(--p)) calc(var(--p) * 2),
+    100% calc(var(--p) * 2), 100% 100%, 0 100%
+  );
+}
+
+
+/* ================= HISTÓRIA ================= */
+.colecao__historia {
+  padding: clamp(3rem, 5vw, 5rem) 6vw clamp(3rem, 6vw, 6rem);
+}
+
+/* duas colunas: esquerda 6% a 40%, direita 60% a 94% */
+.colecao__historia-linha {
+  display: grid;
+  grid-template-columns: 34% 34%;
+  justify-content: space-between;
+  align-items: center;
+}
+.colecao__historia-linha p {
+  font-size: clamp(0.85rem, 1.05vw, 1.15rem);
+  line-height: 1.4;
+}
+.colecao__historia strong {
+  font-weight: 800;
+  color: var(--cor-colecao-texto);
+}
+
+.colecao__h2 {
+  font-family: var(--fonte-titulo);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 3.9vw, 4.6rem);
+  line-height: 1;
+  color: var(--cor-colecao-texto);
+}
+.colecao__h3 {
+  margin: 0.2rem 0 0.8rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: clamp(1.05rem, 1.7vw, 2rem) !important;
+  line-height: 1.1 !important;
+  color: var(--azul);
+}
+
+/* frase grande da direita */
+.colecao__historia-linha .colecao__destaque {
+  font-weight: 800;
+  font-size: clamp(1.3rem, 2.6vw, 3rem);
+  line-height: 1.2;
+  color: var(--cor-colecao-texto);
+}
+
+.colecao__mala {
+  display: block;
+  width: clamp(9rem, 19vw, 22rem);
+  height: auto;
+  margin: clamp(0.4rem, 1vw, 1.2rem) auto;
+  image-rendering: pixelated;
+}
+
+/* celular */
+@media (max-width: 800px) {
+  .colecao__historia-linha {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* ================= CARROSSEL DE FOTOS ================= */
+.colecao__carrossel {
+  height: clamp(16rem, 33vw, 40rem);
+  background: var(--ui-papel, #f6f4f8);
+}
+
+/* cada slide: foto à esquerda (68%) e texto à direita */
+.colecao__slide {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease;
+}
+.colecao__slide.is-ativo {
+  opacity: 1;
+  visibility: visible;
+}
+
+.colecao__carrossel .colecao__faixa-foto {
+  width: 68.6%;
+  filter: none;
+  object-position: center;
+  /* a foto avança sob os degraus só do lado esquerdo */
+  clip-path: polygon(
+    0 0, calc(var(--p) * 2) 0, calc(var(--p) * 2) var(--p),
+    100% var(--p), 100% calc(100% - var(--p)),
+    calc(var(--p) * 2) calc(100% - var(--p)), calc(var(--p) * 2) 100%, 0 100%
+  );
+}
+
+.colecao__slide-texto {
+  position: absolute;
+  left: 71%;
+  bottom: 33%;
+  width: 28%;
+  color: var(--cor-colecao-texto);
+}
+.colecao__slide-titulo {
+  font-weight: 800;
+  font-size: clamp(1.1rem, 2.3vw, 2.8rem);
+  line-height: 1.15;
+  white-space: nowrap;
+}
+.colecao__slide-titulo--grande {
+  font-size: clamp(1.8rem, 4.2vw, 5rem);
+  line-height: 1.05;
+}
+.colecao__slide-ano,
+.colecao__slide-credito {
+  font-weight: 700;
+  font-size: clamp(0.8rem, 1.6vw, 1.9rem);
+  line-height: 1.2;
+}
+.colecao__slide-ano {
+  margin-top: 0.5rem;
+  font-weight: 800;
+}
+
+/* seta (espelhada na última foto) */
+.colecao__seta {
+  position: absolute;
+  left: 81.4%;
+  top: 76%;
+  z-index: 4;
+  width: clamp(2.4rem, 4.8vw, 5.6rem);
+  padding: 0;
+  border: 0;
+  background: none;
+  line-height: 0;
+  cursor: pointer;
+}
+.colecao__seta img {
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+.colecao__seta:hover { translate: 4px 0; }
+.colecao__seta:focus-visible { outline: 3px solid var(--cor-colecao); outline-offset: 4px; }
+.colecao__carrossel--volta .colecao__seta { scale: -1 1; }
+.colecao__carrossel--volta .colecao__seta:hover { translate: -4px 0; }
+
+/* rolo de filme sobre a faixa de cima */
+.colecao__rolo {
+  position: absolute;
+  right: 5.3%;
+  top: calc(var(--p) * -3.3);
+  z-index: 3;
+  width: clamp(2.6rem, 6.8vw, 8rem);
+  height: auto;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .colecao__slide { transition: none; }
+}
+
+/* ================= ELEMENTOS (cartões) ================= */
+.colecao__elementos {
+  --q: clamp(0.25rem, 0.55vw, 0.7rem);   /* tamanho do degrau dos cantos */
+
+  /* cantos em escada: 2 degraus (moldura e foto) e 1 degrau (miolo) */
+  --escada-2: polygon(
+    calc(var(--q) * 2) 0, calc(100% - var(--q) * 2) 0, calc(100% - var(--q) * 2) var(--q),
+    calc(100% - var(--q)) var(--q), calc(100% - var(--q)) calc(var(--q) * 2), 100% calc(var(--q) * 2),
+    100% calc(100% - var(--q) * 2), calc(100% - var(--q)) calc(100% - var(--q) * 2),
+    calc(100% - var(--q)) calc(100% - var(--q)), calc(100% - var(--q) * 2) calc(100% - var(--q)),
+    calc(100% - var(--q) * 2) 100%, calc(var(--q) * 2) 100%, calc(var(--q) * 2) calc(100% - var(--q)),
+    var(--q) calc(100% - var(--q)), var(--q) calc(100% - var(--q) * 2), 0 calc(100% - var(--q) * 2),
+    0 calc(var(--q) * 2), var(--q) calc(var(--q) * 2), var(--q) var(--q), calc(var(--q) * 2) var(--q)
+  );
+  --escada-1: polygon(
+    var(--q) 0, calc(100% - var(--q)) 0, calc(100% - var(--q)) var(--q), 100% var(--q),
+    100% calc(100% - var(--q)), calc(100% - var(--q)) calc(100% - var(--q)),
+    calc(100% - var(--q)) 100%, var(--q) 100%, var(--q) calc(100% - var(--q)),
+    0 calc(100% - var(--q)), 0 var(--q), var(--q) var(--q)
+  );
+
+    padding: clamp(3rem, 5vw, 5rem) 6vw clamp(8rem, 15vw, 17rem);
+}
+
+.colecao__cartoes {
+  width: min(68vw, 100%);
+  margin: clamp(2.5rem, 4vw, 4.5rem) auto 0;
+}
+
+.cartao { position: relative; }
+.cartao + .cartao { margin-top: clamp(3rem, 5.2vw, 6rem); }
+
+/* moldura laranja com cantos em degrau */
+.cartao__moldura {
+  padding: calc(var(--q) * 2);
+  background: var(--cor-colecao);
+  clip-path: var(--escada-2);
+}
+.cartao__miolo {
+  position: relative;
+  display: grid;
+  grid-template-columns: 46% 1fr;
+  gap: clamp(1rem, 3vw, 3.5rem);
+  align-items: center;
+  padding: clamp(1rem, 2.4vw, 2.8rem);
+  background: var(--ui-cartao, #f6f4f8);
+  clip-path: var(--escada-1);
+}
+/* faixa azul clara na base do cartão */
+.cartao__miolo::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(0.5rem, 1.3vw, 1.5rem);
+  background: var(--ui-faixa-cartao, #b8c8ff);
+}
+
+.cartao__foto {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.25;
+  object-fit: cover;
+  clip-path: var(--escada-1);
+}
+
+.cartao__titulo {
+  font-family: var(--fonte-titulo);
+  font-weight: 400;
+  font-size: clamp(1.2rem, 2.5vw, 3rem);
+  line-height: 1.05;
+  color: var(--cor-colecao-texto);
+}
+.cartao__texto p {
+  margin-top: clamp(0.5rem, 1vw, 1.2rem);
+  font-size: clamp(0.8rem, 1.05vw, 1.15rem);
+  line-height: 1.4;
+}
+.cartao__texto strong { font-weight: 800; color: var(--cor-colecao-texto); }
+.cartao__texto .cartao__legenda {
+  margin-top: clamp(1rem, 2.5vw, 3rem);
+  font-size: clamp(0.65rem, 0.85vw, 0.95rem);
+  font-style: italic;
+  color: var(--ui-texto-suave, #3b3b4f);
+}
+
+/* fita azul no topo (feita em CSS) */
+.cartao__fita {
+  position: absolute;
+  left: 50%;
+  top: calc(clamp(0.7rem, 2.4vw, 2.8rem) * -1);
+  z-index: 2;
+  width: clamp(4rem, 10vw, 12rem);
+  height: clamp(0.9rem, 2.9vw, 3.4rem);
+  translate: -50% 0;
+  background: rgba(21, 87, 255, 0.65);
+}
+
+/* ícone no canto superior direito */
+.cartao__icone {
+  position: absolute;
+  right: -1vw;
+  top: -2.5vw;
+  z-index: 2;
+  width: clamp(2.6rem, 8.6vw, 10rem);
+  height: auto;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+/* celular */
+@media (max-width: 800px) {
+  .colecao__cartoes { width: 100%; }
+  .cartao__miolo { grid-template-columns: 1fr; }
+}
+
+/* Padre Cícero: enquadrar pelo topo para não cortar a cabeça */
+.cartao:last-child .cartao__foto {
+  object-position: center top;
+}
+
+/* títulos de slide em tamanho médio e slide só com título */
+.colecao__slide-titulo--medio {
+  font-size: clamp(1.4rem, 3.2vw, 3.8rem);
+}
+.colecao__slide-texto--so-titulo {
+  bottom: 43%;
+}
+
+/* ================= AJUSTES DA FAVELEIRAS ================= */
+/* nada passa da largura da tela (sem rolagem lateral) */
+body.colecao { overflow-x: clip; }
+
+/* livro menor (tamanho parecido com o da mala) e com sombra preta deslocada */
+.colecao--faveleiras .colecao__mala {
+  width: clamp(5rem, 9.5vw, 12rem);
+  filter: drop-shadow(calc(var(--p) * -0.45) calc(var(--p) * 0.45) 0 #000);
+}
+
+/* imagem do grupo (faixa escura) mais para cima */
+.colecao--faveleiras .colecao__faixa:not(.colecao__carrossel) .colecao__faixa-foto {
+  object-position: center 28%;
+}
+
+/* ================= AJUSTES DA RAÍZES VIVAS ================= */
+/* frase da faixa em lima */
+.colecao--raizes .colecao__faixa-frase {
+  color: var(--lima);
+}
+
+/* cocar com tamanho parecido com o da mala */
+.colecao--raizes .colecao__mala {
+  width: clamp(7rem, 14vw, 14rem);
+}
+
+/* título de slide menor (textos longos) */
+.colecao__slide-titulo--pequeno {
+  font-size: clamp(1rem, 2vw, 2.4rem);
+}
+
+/* ícones dos cartões (cada um tem um formato) */
+.colecao--raizes .cartao__icone--pintura  { width: clamp(1.2rem, 3vw, 3.6rem);  right: 0.1vw;  top: -2vw; }
+.colecao--raizes .cartao__icone--cesta    { width: clamp(2.4rem, 6.4vw, 7.5rem); right: -1.2vw; top: -3.2vw; }
+.colecao--raizes .cartao__icone--mandioca { width: clamp(2.4rem, 5.8vw, 7rem);  right: 0.1vw;  top: -2.2vw; }
+.colecao--raizes .cartao__icone--milho    { width: clamp(2.4rem, 5.6vw, 7rem);  right: -2.2vw; top: -1.8vw; }
+.colecao--raizes .cartao__icone--jacare   { width: clamp(4rem, 12vw, 14rem);    right: -5.6vw; top: -2.2vw; }
+
+/* ================= AJUSTES 2 DA RAÍZES VIVAS ================= */
+.colecao--raizes .colecao__intro-img {
+  width: clamp(5rem, 9vw, 17rem); 
+}
+
+/* foto da faixa colorida (mantém só o escurecimento) */
+.colecao__faixa-foto.colecao__faixa-foto--cor {
+  filter: brightness(0.56);
+}
+
+/* frase da faixa em 3 linhas, como no protótipo */
+.colecao--raizes .colecao__faixa-frase {
+  max-width: none;
+  white-space: nowrap;
+}
+@media (max-width: 700px) {
+  .colecao--raizes .colecao__faixa-frase { white-space: normal; }
+}
+
+/* faixa da foto: colorida e mais clara (Raízes e Faveleiras) */
+.colecao--raizes .colecao__faixa:not(.colecao__carrossel) > .colecao__faixa-foto,
+.colecao--faveleiras .colecao__faixa:not(.colecao__carrossel) > .colecao__faixa-foto {
+  filter: grayscale(0) brightness(0.8);
+}
+
+/* ===== ESTEREGG: peça de quebra-cabeça ===== */
+:root { --esteregg-tam: 4.5vw; }     /* tamanho da peça */
+
+.esteregg {
+  position: absolute;
+  left: var(--x, 40%);               /* posição do buraco na foto (defina em cada peça no HTML) */
+  top: var(--y, 50%);
+  width: var(--esteregg-tam);
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.esteregg svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* o buraco na foto: preto */
+.esteregg__furo path { fill: #000; }
+
+/* contorno fino da peça solta; some quando ela encaixa, para a foto ficar sem emenda */
+.esteregg__contorno {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.85);
+  stroke-width: 0.3;
+  stroke-linejoin: miter;
+  transition: stroke-opacity 0.45s 0.2s;
+}
+
+.esteregg.is-encaixando .esteregg__contorno,
+.esteregg.is-pego .esteregg__contorno { stroke-opacity: 0; }
+
+.esteregg__peca {
+  transform: translate(var(--sai-x, 1.3vw), var(--sai-y, -1.5vw)) rotate(var(--giro, 9deg));
+  filter: drop-shadow(0.35vw 0.45vw 0 rgba(0, 0, 0, 0.35));
+  transition: transform 0.55s cubic-bezier(0.3, 1.4, 0.5, 1), filter 0.3s;
+  animation: eg-flutua 2.4s ease-in-out infinite;
+}
+
+@keyframes eg-flutua {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -0.35vw; }
+}
+
+.esteregg:hover .esteregg__peca {
+  transform: translate(calc(var(--sai-x, 1.3vw) * 1.2), calc(var(--sai-y, -1.5vw) * 1.2)) rotate(calc(var(--giro, 9deg) * 1.3));
+  filter: drop-shadow(0 0.3vw 0.5vw rgba(0, 0, 0, 0.35));
+}
+
+/* encaixando e já pega */
+.esteregg.is-encaixando .esteregg__peca,
+.esteregg.is-pego .esteregg__peca {
+  transform: none;
+  animation: none;
+  filter: none;
+}
+
+.esteregg.is-pego { cursor: default; }
+.esteregg.is-pego .esteregg__furo { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .esteregg__peca { animation: none; }
+}
+
+/* ---- popup "Que achado!" (moldura img/guarda-roupa/4x/popupachado@4x.png) ---- */
+:root {
+  --ach-largura: 40vw;      /* largura do popup (a altura acompanha a imagem) */
+  --ach-x-y: 78%;           /* altura do botão X dentro da moldura (maior = desce) */
+  --ach-x-x: 50%;           /* posição do botão X para os lados (maior = direita) */
+  --ach-x-tam: 6;           /* tamanho da área clicável do X */
+}
+
+.eg-popup {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 33, 61, 0.62);
+  z-index: 9999;
+}
+.eg-popup.is-aberto { display: flex; }
+
+.eg-popup__caixa {
+  --u: calc(min(var(--ach-largura), 92vw) / 100);   /* 1u = 1% da largura do popup */
+  position: relative;
+  width: min(var(--ach-largura), 92vw);
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+  animation: eg-pula 0.35s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+@keyframes eg-pula {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.eg-popup__moldura {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+/* área de conteúdo dentro da moldura */
+.eg-popup__conteudo {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 9%;
+  bottom: 26%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--u) * 1.4);
+}
+.eg-popup__conteudo p { margin: 0; }
+
+.eg-popup__aviso {
+  font-family: var(--fonte-titulo, "Montserrat", sans-serif);
+  font-size: calc(var(--u) * 5.5);
+  line-height: 1;
+  color: var(--cor-colecao, #1557ff);
+}
+.eg-popup__achou {
+  font-size: calc(var(--u) * 2.5);
+  color: #14213d;
+}
+.eg-popup__nome {
+  font-weight: 800;
+  color: var(--cor-colecao, #1557ff);
+}
+.eg-popup__img {
+  height: calc(var(--u) * 28);
+  width: auto;
+  max-width: 40%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  display: block;
+}
+.eg-popup__texto {
+  font-size: calc(var(--u) * 2.3);
+  color: #14213d;
+}
+
+/* o X já está desenhado na moldura; este botão invisível fica por cima dele */
+.eg-popup__x {
+  position: absolute;
+  left: var(--ach-x-x);
+  top: var(--ach-x-y);
+  width: calc(var(--u) * var(--ach-x-tam));
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.eg-popup__x:hover,
+.eg-popup__x:focus-visible { outline: none; }
+
+/* peça sem foto no bloco (ex.: espaço em branco): usa a cor da coleção */
+.esteregg.esteregg--sem-foto .esteregg__contorno { fill: var(--ui-papel, #fff); stroke: var(--ui-corpo, #111); }
+
+/* zona vazia para esconder uma peça (ex.: entre o último card e o rodapé) */
+.esteregg-zona {
+  position: relative;
+  height: 0;
+}
+
+.eg-popup__img[data-peca="cinto"] {
+  width: 9vw;
+  height: auto;
+}
+
+.eg-popup__img[data-peca="colarvitral"]      { scale: 1.1; }
+.eg-popup__img[data-peca="calcacabrabonita"] { scale: 0.9; }
+.eg-popup__img[data-peca="camisetasertaofc"] { scale: 1.5; }
+.eg-popup__img[data-peca="jaquetamandacaru"] { scale: 1.0; }
+.eg-popup__img[data-peca="bonerecap"]      { scale: 1.1; }
+.eg-popup__img[data-peca="shortspoesia"] { scale: 0.9; }
+.eg-popup__img[data-peca="camisetarelo"] { scale: 1.0; }
+.eg-popup__img[data-peca="cintosaideira"] { scale: 1.1; }
+.eg-popup__img[data-peca="camisetapindorama"] { scale: 0.8; }
+.eg-popup__img[data-peca="jaquetararosaba"] { scale: 0.9; }
+.eg-popup__img[data-peca="toucatucum"] { scale: 0.8; }
+.eg-popup__img[data-peca="bermudakopixawa"] { scale: 0.9; }
+
+/* ===== PAINEL DE ESPAÇAMENTO DO POPUP =====
+   Valores em "u" (1u = 1% da largura do popup).
+   Positivo = desce / vai para a direita. Negativo = sobe / vai para a esquerda.
+   Cada linha mexe só no próprio elemento, sem empurrar os outros. */
+.eg-popup__caixa {
+  --dy-aviso: 3;      /* "QUE ACHADO!" */
+  --dy-achou: 3;      /* "Você encontrou ___" */
+  --dy-img:   0;      /* a peça */
+  --dy-texto: -2.7;   /* "A peça foi salva..." (o valor que você já tinha) */
+}
+.eg-popup__aviso { translate: 0 calc(var(--u) * var(--dy-aviso)); }
+.eg-popup__achou { translate: 0 calc(var(--u) * var(--dy-achou)); }
+.eg-popup__img   { translate: 0 calc(var(--u) * var(--dy-img)); }
+.eg-popup__texto { translate: 0 calc(var(--u) * var(--dy-texto)); }
+
+/* ===== botões com imagem "pressionada" (seta do carrossel e ícone i) ===== */
+.colecao__seta .img-pressionada,
+.colecao__info .img-pressionada {
+  display: none;
+  position: absolute;
+  left: 0;
+  bottom: 0;                 /* a sombra ficava embaixo e à esquerda */
+  height: auto;
+  image-rendering: pixelated;
+}
+.colecao__seta .img-pressionada { width: 96.49%; }   /* 220 ÷ 228 */
+.colecao__info .img-pressionada { width: 95.24%; }   /* 80 ÷ 84 */
+
+/* mouse em cima, foco do teclado ou clique: troca as imagens */
+.colecao__seta:hover .img-normal,
+.colecao__seta:focus-visible .img-normal,
+.colecao__seta:active .img-normal,
+.colecao__info:hover .img-normal,
+.colecao__info:focus-visible .img-normal,
+.colecao__info:active .img-normal { visibility: hidden; }
+
+.colecao__seta:hover .img-pressionada,
+.colecao__seta:focus-visible .img-pressionada,
+.colecao__seta:active .img-pressionada,
+.colecao__info:hover .img-pressionada,
+.colecao__info:focus-visible .img-pressionada,
+.colecao__info:active .img-pressionada { display: block; }
+
+/* a seta que já tem imagem pressionada não precisa deslizar para o lado */
+.colecao__seta:has(.img-pressionada):hover { translate: none; }

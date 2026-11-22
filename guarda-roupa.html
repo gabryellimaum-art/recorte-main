@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guarda-roupa | RE.CORTE</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="acessibilidade.css">
+  <link rel="stylesheet" href="cabecalho.css">
+  <link rel="stylesheet" href="fontes.css">
+  <link rel="stylesheet" href="guarda-roupa.css">
+  <link rel="stylesheet" href="rodape.css">
+  <link rel="stylesheet" href="ajuda.css">
+</head>
+<body class="guarda-roupa" data-ajuda="montar">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <filter id="pinta-azul" color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix" values="0 0 0 0 0.082  0 0 0 0 0.341  0 0 0 0 1  0 0 0 1 0"/>
+    </filter>
+  </svg>
+  <main class="gr">
+  <img class="gr__criar" src="img/guarda-roupa/4x/criar@4x.png" alt="" aria-hidden="true" style="visibility:hidden">
+
+  <section class="gr__palco">
+
+    <div class="gr__manequim">
+      <img class="gr__moldura" src="img/guarda-roupa/4x/moldura@4x.png" alt="">
+      <div class="gr__corpo">
+        <img class="gr__corpo-img" src="img/guarda-roupa/4x/manequimguardaroupa@4x.png" alt="Manequim">
+        <div class="gr__roupas" id="roupas"></div>
+      </div>
+    </div>
+
+        <div class="gr__armario" id="armario">
+      <img class="gr__armario-img" src="img/guarda-roupa/4x/guardaroupaaberto@4x.png" alt="">
+
+      <div class="gr__abas">
+      <button class="gr__aba" data-colecao="arretado" type="button"><img src="img/guarda-roupa/4x/botao-moldura-normal@4x.png" alt=""><span>Arretado</span></button>
+      <button class="gr__aba" data-colecao="faveleiras" type="button"><img src="img/guarda-roupa/4x/botao-moldura-normal@4x.png" alt=""><span>Faveleiras</span></button>
+       <button class="gr__aba" data-colecao="raizes" type="button"><img src="img/guarda-roupa/4x/botao-moldura-normal@4x.png" alt=""><span>Raízes vivas</span></button>
+      </div>
+
+      <div class="gr__pecas" id="pecas"></div>
+
+    
+      <div class="gr__porta gr__porta--esq"></div>
+      <div class="gr__porta gr__porta--dir"></div>
+
+      <button class="gr__abrir" id="abrir" type="button" aria-label="Abrir o guarda-roupa"></button>
+      <button class="gr__fechar" id="fechar" type="button">feche</button>
+            <button class="gr__reiniciar" id="reiniciar" type="button" aria-label="Tirar todas as roupas do manequim" title="Tirar todas as roupas">↻</button>
+                  <button class="gr__reiniciar-tudo" id="reiniciar-tudo" type="button">REINICIAR JOGO COMPLETO<small>(BLOQUEARÁ AS PEÇAS NOVAMENTE)</small></button>
+    </div>
+  </section>
+
+
+</main>
+
+
+  <!-- RODAPÉ -->
+  <footer class="rodape" id="rodape">
+    <div class="rodape__corte" aria-hidden="true"></div>
+
+    <div class="rodape__arte" role="img" aria-label="RE.CORTE, com uma tesoura">
+      <div class="rodape__arte-repouso"></div>
+      <div class="rodape__arte-hover"></div>
+    </div>
+
+    <div class="rodape__alvo rodape__alvo--tesoura" aria-hidden="true"></div>
+    <div class="rodape__alvo rodape__alvo--letras" aria-hidden="true"></div>
+
+    <p class="rodape__legenda">
+      RE.CORTE - O LEGADO DAS CULTURAS PERIFÉRICAS<br>
+      2º SEMESTRE - PRODUÇÃO MULTIMÍDIA - SENAC NAÇÕES UNIDAS, 2026
+    </p>
+  </footer>
+
+  <script src="cabecalho.js"></script>
+  <script src="acessibilidade.js"></script>
+  <script src="rodape.js"></script>
+  <script src="pecas.js"></script>
+<script src="guarda-roupa.js"></script>
+<script src="ajuda.js"></script>
+<script src="cards.js"></script>
+    
+</body>
+</html>

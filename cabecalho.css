@@ -1,0 +1,165 @@
+.cabecalho {
+  --cab-gap: clamp(1rem, 2.4vw, 3rem); /* espaço igual entre TODOS os itens da barra */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--ui-fundo, #fff);
+  padding: 1.2rem 2.5vw;
+}
+
+.cabecalho__nav {
+  display: grid;
+  /* 3 colunas iguais | tesoura | 3 colunas iguais */
+  grid-template-columns:
+    repeat(3, minmax(max-content, 1fr))
+    auto
+    repeat(3, minmax(max-content, 1fr));
+  align-items: center;
+  column-gap: var(--cab-gap);
+}
+
+/* os grupos deixam de ser caixas: os botões entram direto na grade da barra */
+.cabecalho__grupo { display: contents; }
+.cabecalho__item { position: relative; }
+
+.cabecalho__tesoura {
+  position: relative;
+  display: block;
+  height: 4rem;
+  margin: -1.1rem 0;
+}
+.tesoura__fechada,
+.tesoura__aberta {
+  display: block;
+  height: 100%;
+  width: auto;
+  image-rendering: pixelated;
+  transition: none;
+}
+.tesoura__aberta {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  opacity: 0;
+}
+.cabecalho__tesoura:hover .tesoura__fechada { opacity: 0; }
+.cabecalho__tesoura:hover .tesoura__aberta { opacity: 1; }
+@keyframes tesoura-corta {
+  0%   { opacity: 1; }
+  50%  { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cabecalho__tesoura:hover .tesoura__aberta { animation: none; opacity: 1; }
+}
+
+/* cada botão ocupa a coluna inteira = todos com a mesma largura */
+.cabecalho .cab-botao {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+/* botão com moldura pixel */
+.cab-botao {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: clamp(0.85rem, 1.2vw, 1.25rem);
+  line-height: 1.2;
+  text-decoration: none;
+  color: var(--ui-texto, #000);
+  background: var(--ui-fundo, #fff);
+  background-clip: padding-box;
+  border-style: solid;
+  border-width: 10px 17px 7px 17px;
+  border-image: url("img/garimpar/nav/4x/botao-moldura@4x.png") 34 58 24 58 / 10px 17px 7px 17px stretch;
+  image-rendering: pixelated;
+  padding: 0.15rem 0.2rem 0.45rem;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.08s steps(2);
+}
+/* hover: moldura sem sombra + botão se desloca para onde estava a sombra */
+.cab-botao:hover,
+.cab-botao:focus-visible {
+  border-image-source: url("img/garimpar/nav/4x/botao-moldura-normal@4x.png");
+  transform: translate(-3px, 3px);
+}
+
+/* clique: mantém a pressionada (sem voltar a subir) */
+.cab-botao:active {
+  border-image-source: url("img/garimpar/nav/4x/botao-moldura-normal@4x.png");
+  transform: translate(-3px, 3px);
+  filter: none;
+}
+
+.cab-botao:active { transform: translateY(1px); filter: none; }
+.cab-botao:focus-visible { color: var(--azul); text-decoration: underline; }
+.cab-botao[aria-current="page"] { color: var(--azul); }
+
+.cab-icone {
+  height: 1.6rem;
+  width: auto;
+  image-rendering: pixelated;
+}
+
+/* menu de coleções */
+.cabecalho__menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 11rem;
+  list-style: none;
+  background: var(--ui-fundo, #fff);
+  border: 3px solid var(--ui-texto, #000);
+  box-shadow: 4px 4px 0 var(--ui-texto, #000);
+  padding: 0.4rem;
+  z-index: 10;
+}
+.cabecalho__menu[hidden] { display: none; }
+.cabecalho__menu a {
+  display: block;
+  padding: 0.55rem 0.8rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  color: var(--ui-texto, #000);
+}
+.cabecalho__menu a:hover,
+.cabecalho__menu a:focus-visible { color: #fff; outline: none; }
+.cabecalho__menu a[data-colecao="arretado"]:hover,
+.cabecalho__menu a[data-colecao="arretado"]:focus-visible { background: #ff5a1f; }
+.cabecalho__menu a[data-colecao="faveleiras"]:hover,
+.cabecalho__menu a[data-colecao="faveleiras"]:focus-visible { background: #ff2e8a; }
+.cabecalho__menu a[data-colecao="raizes"]:hover,
+.cabecalho__menu a[data-colecao="raizes"]:focus-visible { background: #7628ff; }
+
+/* botão de voltar fixo */
+.cab-voltar {
+  position: fixed;
+  top: calc(var(--altura-cabecalho, 5rem) + 1rem);
+  left: 2.5vw;
+  z-index: 999; /* logo abaixo da barra (1000) */
+}
+.cab-voltar .cab-botao {
+  white-space: nowrap;
+}
+/* ================= MODO ESCURO: moldura dos botões =================
+   Só troca a IMAGEM. Fatia, espessura e fundo continuam os da regra .cab-botao
+   (o fundo já fica navy sozinho, pois usa var(--ui-fundo)). Não definir
+   "background" aqui: o .ir-manequim (garimpar.css) tem um fundo próprio, de
+   propósito menor que a borda, e um fundo a mais viraria um retângulo atrás
+   dos cantos em degrau.
+   (ajuste o caminho se suas imagens estiverem em outra pasta) */
+html[data-tema="escuro"] .cab-botao {
+  border-image-source: url("img/garimpar/nav/4x/botao-moldura-noturno@4x.png");
+}
+html[data-tema="escuro"] .cab-botao:hover,
+html[data-tema="escuro"] .cab-botao:focus-visible,
+html[data-tema="escuro"] .cab-botao:active {
+  border-image-source: url("img/garimpar/nav/4x/botao-moldura-normal-noturno@4x.png");
+}

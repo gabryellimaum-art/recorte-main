@@ -1,0 +1,234 @@
+/* cards.css: popup de boas-vindas com os 3 cards que viram */
+:root {
+  --cp-largura: var(--aj-largura, 68vw);   /* mesma largura do popup da Ajuda */
+
+  /* área do conteúdo dentro da moldura (em % da moldura) */
+  --cp-esq: 7%;
+  --cp-dir: 7%;
+  --cp-topo: 8%;
+  --cp-base: 8%;
+
+  /* cards */
+  --cp-card-w: calc(var(--cp-largura) * 0.26);   /* largura de cada card; 0.26 = 26% da moldura */
+  --cp-gap: calc(var(--cp-largura) * 0.035);     /* espaço entre os cards */
+
+  /* textos do popup */
+  --cp-titulo: 1.6vw;
+  --cp-texto: 1.15vw;
+  --cp-botao: 5.2vw;        /* largura do botão Garimpar */
+  --cp-botao-sobe: -0.1vw;   /* posição do botão inteiro: negativo = sobe, positivo = desce */
+  --cp-botao-letra: 0.78vw;  /* tamanho da letra dentro do botão */
+  --cp-botao-x: 0.1vw;         /* empurra a letra: positivo = direita, negativo = esquerda */
+  --cp-botao-y: 0vw;         /* empurra a letra: positivo = baixo, negativo = cima */                /* largura do botão */
+  --cp-titulo-y: -1.4vw;            /* título: negativo = sobe, positivo = desce */
+  --cp-rodape-y: 0.7vw;             /* texto "Surgiu alguma..." e botão: positivo = desce */
+
+  --cp-lima: #c8f000;
+  --cp-azul: var(--azul, #1557ff);
+}
+
+.cards-pop {
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 10, 20, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s, visibility 0.25s;
+}
+.cards-pop.is-aberto { opacity: 1; visibility: visible; }
+
+.cards-pop *,
+.cards-pop *::before,
+.cards-pop *::after { box-sizing: border-box; }
+.cards-pop h2,
+.cards-pop h3,
+.cards-pop p { margin: 0; }
+
+.cards-pop__caixa {
+  position: relative;
+  width: var(--cp-largura);
+  font-family: "Montserrat", sans-serif;
+}
+
+.cards-pop__moldura {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+.cards-pop__conteudo {
+  position: absolute;
+  left: var(--cp-esq);
+  right: var(--cp-dir);
+  top: var(--cp-topo);
+  bottom: var(--cp-base);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cp-titulo {
+  font-size: var(--cp-titulo);
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  color: var(--cp-azul);
+  translate: 0 var(--cp-titulo-y);
+}
+
+.cp-cards {
+  display: flex;
+  justify-content: center;
+  gap: var(--cp-gap);
+  width: 100%;
+}
+
+/* ---------- CARD (frente e verso) ---------- */
+.cp-card {
+  position: relative;
+  width: var(--cp-card-w);
+  font-size: calc(var(--cp-card-w) / 20);   /* 1em = 1/20 do card: tudo acompanha o tamanho */
+  perspective: 1200px;
+  outline: none;
+}
+.cp-giro {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@media (hover: hover) {
+  .cards-pop.pronto .cp-card:hover .cp-giro { transform: scale(1.06) rotateY(180deg) rotateZ(2deg); }
+}
+.cp-card:focus-visible .cp-giro,
+.cp-card.virado .cp-giro { transform: scale(1.06) rotateY(180deg) rotateZ(2deg); }
+
+.cp-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.cp-frente { position: relative; }
+.cp-verso { position: absolute; inset: 0; transform: rotateY(180deg); }
+
+.cp-moldura { display: block; width: 100%; height: auto; image-rendering: pixelated; }
+
+.cp-ilustracao {
+  position: absolute;
+  left: 7.5%;
+  top: 4.7%;
+  width: 85%;
+  height: 61.6%;
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
+}
+
+/* FRENTE: o título fica no lugar; o texto se centraliza no espaço que sobra */
+.cp-frente__texto {
+  position: absolute;
+  left: 9%;
+  right: 9%;
+  top: 68%;
+  bottom: 3%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: #fff;
+}
+.cp-frente__texto h3 { font-size: 1.05em; font-weight: 700; margin-bottom: 0.2em; }
+.cp-frente__p { flex: 1; display: flex; align-items: center; justify-content: center; }
+.cp-frente__p p { font-size: 0.8em; font-weight: 700; line-height: 1.3; }   /* 700 = mais grosso */
+.cp-card--conhecer .cp-frente__texto { color: var(--cp-azul); }
+
+/* VERSO: título + texto formam um grupo centralizado no meio do card */
+.cp-verso__texto {
+  position: absolute;
+  inset: 0;
+  padding: 0 var(--vp, 11%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+}
+.cp-verso__texto h3 { font-size: 1.9em; font-weight: 700; color: var(--cp-lima); margin-bottom: 0.8em; }
+.cp-verso__p { display: flex; flex-direction: column; gap: 0.9em; }
+.cp-verso__p p { font-size: 0.95em; font-weight: 600; line-height: 1.4; }
+.cp-verso__p b { font-weight: 800; }
+
+.cp-card--garimpar .cp-verso__texto { --vp: 11%; }
+.cp-card--conhecer .cp-verso__texto { --vp: 11%; color: var(--cp-azul); }
+.cp-card--conhecer .cp-verso__texto h3 { color: var(--cp-azul); }
+.cp-card--criar .cp-verso__texto { --vp: 12%; }
+
+/* ---------- rodapé do popup ---------- */
+.cp-rodape {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8vw;
+  text-align: center;
+  font-size: var(--cp-texto);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--cp-azul);
+  translate: 0 var(--cp-rodape-y);
+}
+.cp-pill {
+  display: inline-block;
+  padding: 0 0.6em;
+  border: 1.5px solid #1a1a1a;
+  border-radius: 1em;
+  background: #fff;
+  color: #1a1a1a;
+  font-size: 0.8em;
+  font-weight: 700;
+  line-height: 1.6;
+  vertical-align: 0.05em;
+}
+.cp-botao {
+  position: relative;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.18s steps(4);
+}
+.cp-botao { position: relative; translate: 0 var(--cp-botao-sobe); }
+.cp-botao img { display: block; width: var(--cp-botao); height: auto; image-rendering: pixelated; }
+.cp-botao span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: var(--cp-botao-letra);
+  translate: var(--cp-botao-x) var(--cp-botao-y);
+  color: #000;
+}
+.cp-botao__txt {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Montserrat", sans-serif;
+  font-size: calc(var(--cp-botao) * 0.14);
+  font-weight: 700;
+  color: #111;
+}
+.cp-botao:hover,
+.cp-botao:focus-visible { transform: translateY(-4px) scale(1.06); }
+.cp-botao:active { transform: translateY(2px) scale(0.97); }
+
+/* a tesoura da barra de cima reabre o popup */
+.cabecalho__tesoura[role="button"] { cursor: pointer; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cp-giro, .cp-botao { transition: none; }
+}

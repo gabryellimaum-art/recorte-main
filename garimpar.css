@@ -1,0 +1,186 @@
+/* ================= BASE ================= */
+:root {
+  --azul: #1557ff;
+  --lima: #c8f000;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--altura-cabecalho, 6.1rem);
+}
+
+body { font-family: "Montserrat", sans-serif; }
+
+.manequim,
+.rodape {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.rodape { background: var(--azul); color: #fff; }
+.manequim { background: linear-gradient(#fff, #e9efff); }
+
+/* ================= TELA INICIAL (capa + faixa) ================= */
+/* A capa e a faixa formam um bloco só, centralizado na altura da tela
+   (o que sobra de espaço fica igual em cima e embaixo). */
+.tela {
+  /* ===== PAINEL DE AJUSTES ===== */
+  --logo-largura: min(70%, 110vh);               /* tamanho do RE.CORTE */
+  --frase-tamanho: clamp(1rem, 1.7vw, 1.8rem);   /* tamanho da frase */
+  --botao-fonte: clamp(1rem, 1.45vw, 1.45rem);   /* tamanho do botão Ir ao manequim */
+  --tela-gap: 3.5rem;                            /* espaço entre RE.CORTE, frase, botão e faixa */
+  --tela-desce: 5rem;                            /* empurra todo o bloco para baixo (0 = centro exato) */
+  --faixa-altura: clamp(6.5rem, 8.5vw, 8rem);    /* altura da faixa em loop */
+  /* ============================== */
+
+  position: relative;
+  min-height: calc(100vh - var(--altura-cabecalho, 6.1rem));
+  min-height: calc(100svh - var(--altura-cabecalho, 6.1rem));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--tela-gap);
+  padding: calc(1.4rem + var(--tela-desce)) 0 1.4rem;
+  background: var(--azul);
+  color: #fff;
+}
+
+.capa__linha {
+  position: absolute;
+  top: 1rem;
+  left: 0;
+  right: 0;
+  height: 0.4rem;
+  background: repeating-linear-gradient(90deg, #fff 0 1.75rem, transparent 1.75rem 3.5rem);
+}
+.capa__linha--baixo {
+  top: auto;
+  bottom: 1rem;
+}
+
+/* ================= CAPA ================= */
+.capa {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--tela-gap);
+  padding: 0 6vw;
+}
+
+/* marca = logo + botões de roupa (os botões acompanham o tamanho do logo) */
+.capa__marca {
+  position: relative;
+  width: var(--logo-largura);
+  max-width: 100%;
+}
+
+.capa__logo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ----- botões de roupa decorativos -----
+   left / top / width são porcentagens do logo.
+   Para mexer: left maior = mais para a direita; top maior = mais para baixo. */
+.capa__botao {
+  position: absolute;
+  height: auto;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+.capa__botao--conjunto {   /* verde + escuro, canto inferior esquerdo */
+  width: 25%;
+  left: -30.5%;
+  top: 78%;
+}
+.capa__botao--escuro {     /* canto superior direito */
+  width: 12.8%;
+  left: 115.4%;
+  top: -45%;
+}
+
+.capa__frase {
+  font-weight: 800;
+  font-size: var(--frase-tamanho);
+  line-height: 1.15;
+  text-align: center;
+}
+
+/* o botão usa o estilo .cab-botao da barra (cabecalho.css); aqui só o tamanho */
+.ir-manequim {
+  font-size: var(--botao-fonte);
+  border-width: 0.5em 0.85em 0.35em 0.85em;
+  border-image-width: 0.5em 0.85em 0.35em 0.85em;
+  padding: 0.1em 0.3em 0.35em;
+
+  /* fundo estendido por baixo da borda, com folga nas pontas */
+  background:
+    linear-gradient(var(--ui-fundo, #fff), var(--ui-fundo, #fff))
+    center / calc(100% - 1.5em) calc(100% - 0.6em) no-repeat;
+  background-origin: border-box;
+  background-clip: border-box;
+}
+
+
+.ir-manequim:hover,
+.ir-manequim:focus-visible,
+.ir-manequim:active {
+  transform: translate(-3px, 3px);
+}
+
+/* ================= FAIXA ================= */
+.faixa {
+  height: var(--faixa-altura);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  color: #fff;
+}
+.faixa__trilho {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  width: max-content;
+  list-style: none;
+  padding: 0 2rem;
+  animation: faixa-loop var(--duracao, 50s) linear infinite;
+}
+.faixa__nome {
+  font-family: var(--fonte-titulo);
+  font-weight: 900;
+  font-size: clamp(4.1rem, 2.4vw, 2.4rem);   /* tamanho dos nomes */
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.faixa__peca {
+  height: clamp(3.4rem, 6.8vw, 6.4rem);      /* tamanho geral das roupas */
+  display: flex;
+  align-items: center;
+}
+.faixa__peca img {
+  height: calc(100% * var(--escala, 1));
+  width: auto;
+  image-rendering: pixelated;
+}
+
+/* escala de cada peça (1 = tamanho geral) */
+.faixa__peca--jaqueta { --escala: 1.15; }
+.faixa__peca--bermuda { --escala: 0.85; }
+.faixa__peca--saia    { --escala: 0.85; }
+
+@keyframes faixa-loop {
+  to { transform: translateX(-50%); }
+}
+
+/* ================= MOVIMENTO REDUZIDO ================= */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .faixa__trilho { animation-duration: calc(var(--duracao, 50s) * 3); }
+}

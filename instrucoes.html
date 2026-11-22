@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instruções | RE.CORTE</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="acessibilidade.css">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: "Montserrat", sans-serif;
+      background: #ffffff url("img/instrucoes/fundo-instrucoes@4x.jpg") center / cover no-repeat;
+    }
+
+    .so-leitor {
+      position: absolute;
+      width: 1px; height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+    }
+
+    .pagina {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      padding: 2rem;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* ---------- CARD ---------- */
+    .card {
+      position: relative;
+      width: 20rem;
+      perspective: 1200px;
+      outline: none;
+      cursor: default;
+    }
+
+    .card__giro {
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    @media (hover: hover) {
+      .pronto .card:hover .card__giro { transform: scale(1.06) rotateY(180deg) rotateZ(2deg); }
+    }
+    .card:focus-visible .card__giro,
+    .card.virado .card__giro {
+      transform: scale(1.06) rotateY(180deg) rotateZ(2deg);
+    }
+
+    .card__face {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .card__frente { position: relative; }
+    .card__verso {
+      position: absolute;
+      inset: 0;
+      transform: rotateY(180deg);
+    }
+
+    .card__moldura {
+      display: block;
+      width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+    }
+
+    /* ---------- ILUSTRAÇÃO (dentro do quadrado branco) ---------- */
+    .card__ilustracao {
+      position: absolute;
+      left: 7.5%;
+      top: 4.7%;
+      width: 85%;
+      height: 61.6%;
+      object-fit: contain;
+      object-position: center;
+      pointer-events: none;
+    }
+
+    .card__texto {
+      position: absolute;
+      left: 9%;
+      right: 9%;
+      top: 68%;
+      text-align: center;
+      color: #ffffff;
+    }
+    .card__texto h2 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .card__texto p { font-size: 0.8rem; line-height: 1.3; }
+    .card--conhecer .card__texto { color: var(--azul); }
+
+    /* ---------- VERSO ---------- */
+    :root { --lima: #c8f000; }
+
+    .verso__texto {
+      position: absolute;
+      left: 15%;
+      right: 15%;
+      top: 14%;
+      color: #ffffff;
+      text-align: center;
+    }
+    .verso__texto h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--lima);
+      margin-bottom: 1.4rem;
+    }
+    .verso__texto p {
+      font-size: 0.8rem;
+      line-height: 1.4;
+      margin-bottom: 1rem;
+    }
+    .verso__texto .destaque {
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-top: 1.2rem;
+    }
+
+    /* Conhecer: fundo lima, texto todo azul */
+    .card--conhecer .verso__texto { color: var(--azul, #1658ff); left: 14%; right: 17%; top: 12%; }
+    .card--conhecer .verso__texto h2 { color: var(--azul, #1658ff); }
+
+    /* Criar: fundo azul, título lima, texto branco */
+    .card--criar .verso__texto { left: 17%; right: 18%; top: 17%; }
+
+    /* ---------- BOTÃO GARIMPAR ---------- */
+    .botao-garimpar {
+      display: block;
+      align-self: center;
+      margin-top: 2.5rem;
+      transition: transform 0.18s steps(4);
+    }
+    .botao-garimpar img {
+      display: block;
+      width: 11rem;
+      height: auto;
+      image-rendering: pixelated;
+      transition: filter 0.18s steps(4);
+    }
+    .botao-garimpar:hover,
+    .botao-garimpar:focus-visible {
+      transform: translateY(-6px) scale(1.06);
+    }
+    .botao-garimpar:hover img,
+    .botao-garimpar:focus-visible img {
+      filter: drop-shadow(5px 5px 0 var(--azul));
+    }
+    .botao-garimpar:active { transform: translateY(2px) scale(0.97); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card__giro, .botao-garimpar, .botao-garimpar img { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="so-leitor">Instruções</h1>
+
+  <div class="pagina">
+
+    <main class="cards">
+
+      <!-- GARIMPAR -->
+      <article class="card card--garimpar" tabindex="0">
+        <div class="card__giro">
+          <div class="card__face card__frente">
+            <img class="card__moldura" src="img/instrucoes/card-garimpar@4x.png" alt="">
+            <img class="card__ilustracao" src="img/instrucoes/4x/ilustracao-garimpar@4x.png" alt="">
+            <div class="card__texto">
+              <h2>1. Garimpar</h2>
+              <p>Navegue pelas coleções, explore as peças e descubra um novo mundo escondido em cada conjunto.</p>
+            </div>
+          </div>
+          <div class="card__face card__verso">
+            <img class="card__moldura" src="img/instrucoes/verso-garimpar@4x.png" alt="">
+            <div class="verso__texto">
+              <h2>Garimpar</h2>
+              <p>Na primeira fase, você navegará por três coleções:  ARRETADO, FAVELEIRAS e RAÍZES VIVAS, cada uma contando uma história. O que acha de encontrar aquela que conta um pouco sobre suas origens? Clique nas coleções e começe a explorar!</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CONHECER -->
+      <article class="card card--conhecer" tabindex="0">
+        <div class="card__giro">
+          <div class="card__face card__frente">
+            <img class="card__moldura" src="img/instrucoes/card-conhecer@4x.png" alt="">
+            <img class="card__ilustracao" src="img/instrucoes/4x/ilustracao-conhecer@4x.png" alt="">
+            <div class="card__texto">
+              <h2>2. Conhecer</h2>
+              <p>Leia as histórias e encontre as peças escondidas. Investigue o legado que também vive em você!</p>
+            </div>
+          </div>
+          <div class="card__face card__verso">
+            <img class="card__moldura" src="img/instrucoes/verso-conhecer@4x.png" alt="">
+            <div class="verso__texto">
+              <h2>Conhecer</h2>
+              <p>Nesta segunda etapa, você conhecerá mais de perto o que inspirou o projeto: 
+a periferia. Entenda as histórias para desbloquear conteúdos e reflita sobre narrativas que, mesmo transformadas pelo tempo, guardam sua essência.</p>
+  
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CRIAR -->
+      <article class="card card--criar" tabindex="0">
+        <div class="card__giro">
+          <div class="card__face card__frente">
+            <img class="card__moldura" src="img/instrucoes/card-criar@4x.png" alt="">
+            <img class="card__ilustracao" src="img/instrucoes/4x/ilustracao-criar@4x.png" alt="">
+            <div class="card__texto">
+              <h2>3. Criar</h2>
+              <p>Vista o manequim com as peças que você garimpou e conheceu. Monte um look com seu estilo!</p>
+            </div>
+          </div>
+          <div class="card__face card__verso">
+            <img class="card__moldura" src="img/instrucoes/verso-criar@4x.png" alt="">
+            <div class="verso__texto">
+              <h2>Criar</h2>
+              <p>Por fim, você poderá customizar o seu próprio manequim com todas as peças que você adquiriu ao longo da jornada. É o seu momento de criar, use e misture com liberdade todas as vestimentas.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </main>
+
+    <!-- BOTÃO GARIMPAR (leva para a próxima página, que ainda vamos fazer) -->
+    <a class="botao-garimpar" href="garimpar.html" target="_top" aria-label="Garimpar">
+      <img src="img/instrucoes/botao-garimpar@4x.png" alt="">
+    </a>
+
+  </div>
+
+  <script src="acessibilidade.js"></script>
+  <script>
+    // O giro por hover só liga depois que o mouse se mexer de verdade
+    window.addEventListener("mousemove", function () {
+      document.body.classList.add("pronto");
+    }, { once: true });
+
+    // Toque no celular: um toque vira o card, outro desvira
+    document.querySelectorAll(".card").forEach(function (card) {
+      card.addEventListener("click", function () {
+        if (window.matchMedia("(hover: none)").matches) {
+          card.classList.toggle("virado");
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

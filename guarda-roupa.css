@@ -1,0 +1,441 @@
+/* ===== BASE (confira com o topo do sobre.css) ===== */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #f6f4f8;
+}
+
+/* ===== PAINEL DE AJUSTES ===== */
+:root {
+  --criar-largura: 12vw;        /* título CRIAR */
+   --palco-altura: min(44vw, 93vh);   /* altura do guarda-roupa: 93vh = quase a tela toda */
+  --criar-y: 4vh;                  /* distância do título CRIAR até o topo da tela */
+    --rtudo-x: 78.2%;                  /* botão REINICIAR JOGO COMPLETO (porta direita): esquerda */
+  --rtudo-y: 77.2%;                  /* altura */
+  --rtudo-largura: 14.4%;            /* largura do texto (as linhas quebram dentro dela) */
+    --reiniciar-x: 82.4%;              /* botão de reiniciar (porta direita): esquerda */
+  --reiniciar-y: 44.4%;              /* botão de reiniciar: altura */
+  --reiniciar-largura: 7.8%;         /* botão de reiniciar: largura da área clicável */
+    
+  --aba-fonte: 0.0165;               /* tamanho da letra dos botões (maior = letra maior) */
+  --aba-texto-x: 0em;                /* texto centralizado (negativo = esquerda) */
+  --aba-texto-y: 0em;                /* move o texto para cima (negativo) ou para baixo */
+  --aba-largura: 27%;                /* largura de cada botão (era 30%; menor = cabe melhor no guarda-roupa) */
+  --aba-press-x: -1.59%;             /* o quanto o texto acompanha o miolo da moldura ao pressionar (lado) */
+  --aba-press-y: 6.67%;                /* e para baixo (a moldura não desce, então 0) */
+    --palco-descer: 8vh;               /* desce o conjunto todo (moldura, manequim e guarda-roupa); negativo sobe */
+  --moldura-altura: calc(var(--palco-altura) * 1.064);
+  --moldura-y: calc(var(--palco-altura) * 0.012);
+  --corpo-proporcao: 0.66;     /* tamanho do manequim dentro da moldura */
+  --corpo-y: calc(var(--palco-altura) * -0.0143);
+  --palco-gap: 6vw;            /* espaço entre moldura e guarda-roupa */
+  --gr-lados: 4vw;             /* margem das laterais da tela */
+  --abas-x: 29.5%;             /* botões das coleções: esquerda */
+  --abas-y: 19.5%;             /* botões: distância do topo (maior desce) */
+  --abas-largura: 43%;         /* botões: faixa onde ficam centralizados */
+  --portas-x: 28%;             /* área clicável para abrir: esquerda */
+  --portas-largura: 44%;       /* área clicável para abrir: largura (as 2 portas do meio) */
+  --fechar-x: 4%;              /* botão "feche": esquerda */
+  --fechar-y: 48%;             /* botão "feche": altura */
+  --gr-fundo: 10vw;             /* espaço antes do rodapé */
+}
+
+.gr {
+  position: relative;
+  min-height: 100vh;                 /* uma tela inteira: role até o cabeçalho sair de vista */
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--gr-fundo);    /* espaço antes do rodapé */
+  padding: 0 var(--gr-lados);
+  text-align: center;
+}
+
+.gr__criar {
+  position: absolute;
+  top: var(--criar-y);
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--criar-largura);
+  height: auto;
+  image-rendering: pixelated;
+  z-index: 2;
+}
+
+.gr__palco {
+  display: flex;
+    width: 100%;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--palco-gap);
+    position: relative;
+  top: var(--palco-descer);
+}
+
+/* ---- manequim com moldura ---- */
+.gr__manequim {
+  position: relative;
+  flex: none;
+  transform: translateY(var(--moldura-y));
+}
+
+.gr__moldura {
+  height: var(--moldura-altura);
+  width: auto;
+  display: block;
+  image-rendering: pixelated;
+}
+
+.gr__corpo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, calc(-50% + var(--corpo-y)));
+}
+
+.gr__corpo-img {
+  height: calc(var(--moldura-altura) * var(--corpo-proporcao));
+  width: auto;
+  display: block;
+  image-rendering: pixelated;
+}
+
+.gr__roupas {
+  position: absolute;
+  inset: 0;
+}
+
+.gr__roupa {
+  position: absolute;
+  height: auto;
+  image-rendering: pixelated;
+  pointer-events: none;       /* o clique é tratado pelo JS, que ignora as partes transparentes */
+}
+
+/* ---- guarda-roupa ---- */
+.gr__armario {
+  position: relative;
+  flex: none;
+  perspective: 1400px;         /* profundidade do efeito das portas */
+}
+
+.gr__armario-img {
+  height: var(--palco-altura);
+  width: auto;
+  display: block;
+  image-rendering: pixelated;
+}
+
+/* portas do meio: pedaços da imagem "fechado" que giram para a frente */
+.gr__porta {
+  position: absolute;
+  top: 9%;
+  height: 82%;
+  background-image: url("img/guarda-roupa/4x/guardaroupafechado@4x.png");
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  transition: transform 0.7s cubic-bezier(0.3, 0.1, 0.3, 1), opacity 0.15s linear;
+}
+
+.gr__porta--esq {
+  left: 28.5%;
+  width: 21.5%;
+  background-size: 465.12% 121.95%;
+  background-position: 36.3% 50%;
+  transform-origin: left center;
+}
+
+.gr__porta--dir {
+  left: 50%;
+  width: 22%;
+  background-size: 454.55% 121.95%;
+  background-position: 64.1% 50%;
+  transform-origin: right center;
+}
+
+.gr__armario.is-aberto .gr__porta {
+  opacity: 0;
+  transition: transform 0.7s cubic-bezier(0.3, 0.1, 0.3, 1), opacity 0.25s linear 0.5s;
+}
+
+.gr__armario.is-aberto .gr__porta--esq { transform: rotateY(-78deg); }
+.gr__armario.is-aberto .gr__porta--dir { transform: rotateY(78deg); }
+
+/* clique para abrir: só nas duas portas do meio */
+.gr__abrir {
+  position: absolute;
+  left: var(--portas-x);
+  top: 4%;
+  width: var(--portas-largura);
+  height: 88%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.gr__armario.is-aberto .gr__abrir { display: none; }
+
+/* botão sutil "feche" (na porta esquerda, quando aberto) */
+.gr__fechar {
+  position: absolute;
+  left: var(--fechar-x);
+  top: var(--fechar-y);
+  width: 19%;
+  padding: 0.4vw 0;
+  border: 0;
+  background: none;
+  font: 600 0.95vw/1 "Montserrat", sans-serif;
+  color: #6b3d0f;
+  opacity: 0;
+  pointer-events: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.gr__armario.is-aberto .gr__fechar { opacity: 0.55; pointer-events: auto; }
+.gr__armario.is-aberto .gr__fechar:hover { opacity: 1; text-decoration: underline; }
+
+/* abas e peças só aparecem com o guarda-roupa aberto (entram quando as portas abrem) */
+.gr__abas,
+.gr__pecas {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+
+.gr__armario.is-aberto .gr__abas,
+.gr__armario.is-aberto .gr__pecas {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.3s 0.35s;
+}
+
+/* botões das coleções: centralizados e espaçados por igual */
+.gr__abas {
+  position: absolute;
+  left: var(--abas-x);
+  top: var(--abas-y);
+  width: var(--abas-largura);
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.gr__aba {
+  flex: 0 0 var(--aba-largura);
+  position: relative;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.15s, filter 0.15s;
+}
+
+.gr__aba span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 calc(var(--palco-altura) * var(--aba-fonte))/1 "Montserrat", sans-serif;
+  color: #000;
+  white-space: nowrap;
+  transform: translate(var(--aba-texto-x), var(--aba-texto-y));
+  pointer-events: none;
+}
+/* ---- moldura dos botões (mesma lógica do cabeçalho) ----
+   PARADO: moldura COM sombra (765×192). O miolo fica exatamente sobre o botão
+   (por isso o left negativo) e a sombra sai pela esquerda e por baixo.
+   PRESSIONADO: moldura SEM sombra (753×180), deslocada para onde estava a sombra. */
+.gr__aba img {
+  width: 100%;
+  height: auto;
+  display: block;
+  opacity: 0;                 /* só dá o tamanho; a moldura é desenhada no ::before */
+}
+
+.gr__aba::before {
+  content: "";
+  position: absolute;
+  left: -1.59%;
+  top: 0;
+  width: 101.59%;
+  height: 106.67%;
+  background: url("img/guarda-roupa/4x/botao-moldura@4x.png") 0 0 / 100% 100% no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+  transition: top 0.08s steps(2), left 0.08s steps(2);
+}
+
+.gr__aba:hover::before,
+.gr__aba:focus-visible::before,
+.gr__aba:active::before {
+  top: 6.67%;
+  width: 100%;
+  height: 100%;
+  background-image: url("img/guarda-roupa/4x/botao-moldura-normal@4x.png");
+}
+
+/* o texto acompanha o "afundar" */
+.gr__aba span { transition: transform 0.08s steps(2); }
+
+.gr__aba:hover span,
+.gr__aba:focus-visible span,
+.gr__aba:active span {
+  transform: translate(calc(var(--aba-texto-x) + var(--aba-press-x)), calc(var(--aba-texto-y) + var(--aba-press-y)));
+}
+
+.gr__aba:hover { transform: none; }
+
+/* coleção selecionada: glow amarelo */
+.gr__aba.is-ativa { transform: none; filter: drop-shadow(0 0 0.3vw #c8f000); }
+
+/* ---- MODO NOTURNO ---- */
+html[data-tema="escuro"] .gr__aba::before {
+  background-image: url("img/guarda-roupa/4x/botao-moldura-noturno@4x.png");
+}
+html[data-tema="escuro"] .gr__aba:hover::before,
+html[data-tema="escuro"] .gr__aba:focus-visible::before,
+html[data-tema="escuro"] .gr__aba:active::before {
+  background-image: url("img/guarda-roupa/4x/botao-moldura-normal-noturno@4x.png");
+}
+html[data-tema="escuro"] .gr__aba span { color: #ffffff; }
+
+@media (prefers-reduced-motion: reduce) {
+  .gr__aba::before,
+  .gr__aba span { transition: none; }
+}
+
+/* ---- peças dentro do guarda-roupa ---- */
+.gr__pecas { position: absolute; inset: 0; }
+
+.gr__peca {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.gr__peca img { width: 100%; height: auto; display: block; image-rendering: pixelated; }
+
+.gr__peca:not(.is-bloqueada):hover { transform: translateY(-4%); }
+
+.gr__peca.is-bloqueada { cursor: not-allowed; }
+
+/* cadeado: cresce e diminui junto com a peça */
+.gr__peca { container-type: inline-size; }
+
+/* cadeado: só aparece se a imagem da peça carregou, e acompanha o tamanho dela */
+.gr__peca { container-type: inline-size; }
+
+.gr__peca.is-bloqueada.tem-img::after {
+  content: "🔒";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(0.7vw, 40cqw, 1.8vw);
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* peça bloqueada sem imagem preta: vira silhueta */
+.gr__silhueta { filter: brightness(0); }
+
+/* peça bloqueada sem imagem preta: vira silhueta */
+.gr__silhueta { filter: brightness(0); }
+
+
+/* peças apoiadas na prateleira: o y é a linha onde a base da peça encosta */
+.gr__peca--base { translate: 0 -100%; }
+
+/* a camada das peças não pode bloquear os botões das coleções */
+.gr__armario.is-aberto .gr__pecas { pointer-events: none; }
+.gr__armario.is-aberto .gr__peca { pointer-events: auto; }
+.gr__abas { z-index: 3; }
+
+
+
+.gr__armario.is-aberto .gr__todas {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.3s 0.35s, transform 0.15s, filter 0.15s;
+}
+
+.gr__todas img { width: 100%; height: auto; display: block; image-rendering: pixelated; }
+
+.gr__todas span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 calc(var(--palco-altura) * var(--aba-fonte) * 0.85)/1 "Montserrat", sans-serif;
+  color: #000;
+  white-space: nowrap;
+  transform: translate(var(--aba-texto-x), var(--aba-texto-y));
+  pointer-events: none;
+}
+
+.gr__todas:hover { transform: translateY(-3%); }
+.gr__todas.is-ativa { transform: translateY(-3%); filter: drop-shadow(0 0 0.3vw #c8f000); }
+
+/* botão sutil de reiniciar (na porta direita, quando aberto) */
+.gr__reiniciar {
+  position: absolute;
+  left: var(--reiniciar-x);
+  top: var(--reiniciar-y);
+  width: var(--reiniciar-largura);
+  aspect-ratio: 1.2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: calc(var(--palco-altura) * 0.05);
+  line-height: 1;
+  color: #6b3d0f;
+  opacity: 0;
+  pointer-events: none;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.3s;
+}
+
+.gr__armario.is-aberto .gr__reiniciar { opacity: 0.55; pointer-events: auto; }
+.gr__armario.is-aberto .gr__reiniciar:hover { opacity: 1; transform: rotate(180deg); }
+
+
+
+/* botão sutil REINICIAR JOGO COMPLETO (na porta direita, quando aberto) */
+.gr__reiniciar-tudo {
+  position: absolute;
+  left: var(--rtudo-x);
+  top: var(--rtudo-y);
+  width: var(--rtudo-largura);
+  padding: 0.2vw;
+  border: 0;
+  background: none;
+  font: 700 calc(var(--palco-altura) * 0.0165)/1.25 "Montserrat", sans-serif;
+  color: #6b3d0f;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.gr__reiniciar-tudo small {
+  display: block;
+  margin-top: 0.3em;
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+.gr__armario.is-aberto .gr__reiniciar-tudo { opacity: 0.55; pointer-events: auto; }
+.gr__armario.is-aberto .gr__reiniciar-tudo:hover { opacity: 1; text-decoration: underline; }
+
+

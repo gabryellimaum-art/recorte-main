@@ -1,0 +1,103 @@
+/* ================= RODAPÉ ================= */
+.rodape {
+  /* ===== PAINEL DE AJUSTES DO RODAPÉ ===== */
+  --arte-largura: 88%;  /* tamanho da tesoura + RE.CORTE (maior = arte maior) */
+  --arte-x: 3.5%;        /* posição horizontal (negativo = mais para a esquerda) */
+  --arte-y: -33%;        /* posição vertical (negativo = mais para cima) */
+  --legenda-base: 9%;   /* altura do texto de baixo */
+  /* ======================================= */
+
+  position: relative;
+  display: block;
+  min-height: 0;
+    aspect-ratio: 3.2 / 1;
+  padding: 0;
+  overflow-x: clip;       /* corta o que passa dos lados, mas deixa a tesoura subir sobre o manequim */
+  overflow-y: visible;
+  isolation: isolate;
+    z-index: 2;
+  color: #f6f4f8;
+  background: #f6f4f8;
+}
+
+/* bloco azul: começa logo abaixo da linha de recorte, com a ponta diagonal à esquerda */
+.rodape::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--azul);
+      clip-path: polygon(0 30%, 22% 0, 100% 0, 100% 100%, 0 100%);
+  z-index: -1;
+}
+
+/* linha tracejada: logo onde o manequim termina */
+.rodape__corte {
+  position: absolute;
+  top: 1rem;
+  left: 22%;
+  right: 0;
+  height: 0.4rem;
+  z-index: 1;
+  background: repeating-linear-gradient(90deg, #fff 0 1.75rem, transparent 1.75rem 3.5rem);
+}
+
+/* arte: tesoura + RE.CORTE (proporção real do PNG: 6529 x 2770) */
+.rodape__arte {
+  position: absolute;
+  left: var(--arte-x);
+  top: var(--arte-y);
+  width: var(--arte-largura);
+  aspect-ratio: 6529 / 2770;
+  z-index: 3;
+  pointer-events: none;
+}
+.rodape__arte-repouso,
+.rodape__arte-hover {
+  position: absolute;
+  inset: 0;
+}
+/* cada estado é uma camada com 2 imagens: tesoura + RE.CORTE (posições em % da tela 6529 x 2770) */
+.rodape__arte-repouso,
+.rodape__arte-hover {
+  image-rendering: pixelated;   /* mantém o pixel art nítido */
+  background-repeat: no-repeat;
+}
+.rodape__arte-repouso {
+  background-image:
+    url("img/garimpar/rodape/4x/tesouraaberta@4x.png"),
+    url("img/garimpar/rodape/4x/recortenormal@4x.png");
+  background-size: 20.340% 32.635%, 75.203% 27.942%;
+  background-position: 14.382% 20.364%, 65.658% 73.848%;
+}
+.rodape__arte-hover {
+  background-image:
+    url("img/garimpar/rodape/4x/tesourafechada@4x.png"),
+    url("img/garimpar/rodape/4x/recortecortado@4x.png");
+  background-size: 20.279% 32.527%, 76.597% 30.903%;
+  background-position: 14.371% 20.332%, 66.590% 72.518%;
+  opacity: 0;
+}
+.rodape--corte .rodape__arte-repouso { opacity: 0; }
+.rodape--corte .rodape__arte-hover { opacity: 1; }
+
+.rodape__legenda {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--legenda-base);
+  z-index: 2;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: clamp(0.6rem, 0.95vw, 1rem);
+  line-height: 1.5;
+  text-align: center;
+}
+/* áreas que disparam a animação (posição e tamanho em % do rodapé) */
+.rodape__alvo {
+  position: absolute;
+  z-index: 4;
+    pointer-events: auto;
+  /* para enxergar as áreas enquanto ajusta, tire o comentário da linha abaixo: */
+  /* outline: 2px dashed red; */
+}
+.rodape__alvo--tesoura { left: 13.5%; top: -18%; width: 18%; height: 42%; }

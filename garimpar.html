@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Garimpar | RE.CORTE</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="acessibilidade.css">
+  <link rel="stylesheet" href="cabecalho.css">
+  <link rel="stylesheet" href="fontes.css">
+  <link rel="stylesheet" href="garimpar.css">
+    <link rel="stylesheet" href="manequim.css">
+      <link rel="stylesheet" href="rodape.css">
+      <link rel="stylesheet" href="ajuda.css">
+        <link rel="stylesheet" href="cards.css">
+
+        
+</head>
+<body data-ajuda="garimpar" data-cards-auto>
+
+  <!-- TELA INICIAL: capa + faixa, centralizadas juntas na página -->
+  <div class="tela">
+
+    <div class="capa__linha" aria-hidden="true"></div>
+
+    <!-- CAPA -->
+    <section class="capa" id="capa">
+      <div class="capa__marca">
+        <img class="capa__logo" src="img/SVG/logo-capa.svg" alt="RE.CORTE">
+
+        <!-- botões de roupa (decorativos) -->
+        <img class="capa__botao capa__botao--conjunto" src="img/garimpar/capa/4x/botoes-conjunto@4x.png" alt="Botões verde e preto" aria-hidden="true">
+        <img class="capa__botao capa__botao--escuro" src="img/garimpar/capa/4x/botao-escuro@4x.png" alt="Botão preto" aria-hidden="true">
+      </div>
+
+      <p class="capa__frase">Já pensou em vestir<br>a sua história?</p>
+
+      <a class="cab-botao ir-manequim" href="#manequim">Ir ao manequim <span aria-hidden="true">↓</span></a>
+    </section>
+
+        <!-- FAIXA EM LOOP -->
+    <section class="faixa" id="faixa" aria-label="Coleções">
+      <ul class="faixa__trilho">
+        <li class="faixa__peca faixa__peca--saia"><img src="img\guarda-roupa/4x/toucatucum@4x.png" alt="Touca Tucum"></li>
+        <li class="faixa__nome">RAÍZES VIVAS</li>
+        <li class="faixa__peca faixa__peca--bermuda"><img src="img/guarda-roupa/4x/popup/shortspoesia@4x.png" alt="Shorts Poesia"></li>
+        <li class="faixa__nome">FAVELEIRAS</li>
+        <li class="faixa__peca faixa__peca--jaqueta"><img src="img/guarda-roupa/4x/popup/jaquetamandacaru@4x.png" alt="Jaqueta Mandacaru"></li>
+        <li class="faixa__nome">ARRETADO</li>
+      </ul>
+    </section>
+
+    <!-- linha de recorte do fim da capa azul (NOVA) -->
+    <div class="capa__linha capa__linha--baixo" aria-hidden="true"></div>
+
+  </div>
+
+   <!-- MANEQUIM -->
+  <section class="manequim" id="manequim" aria-label="Manequim">
+    <div class="manequim__palco">
+
+      <p class="manequim__dica" data-cores>CONHEÇA OS MANEQUINS!</p>
+      <img class="manequim__vizinho manequim__vizinho--esq" alt="" aria-hidden="true" hidden>
+      <img class="manequim__vizinho manequim__vizinho--dir" alt="" aria-hidden="true" hidden>
+
+      <div class="manequim__colecao" aria-live="polite" hidden>
+        <h2 class="manequim__nome"></h2>
+        <p class="manequim__texto"></p>
+      </div>
+
+      <a class="manequim__link" id="manequim-link">
+        <img class="manequim__boneco" src="img/garimpar/manequim/4x/manequim-liso@4x.png" alt="Manequim de madeira">
+      </a>
+
+      <button class="manequim__seta manequim__seta--esq" type="button" aria-label="Ver o look anterior" hidden>
+        <img src="img/1x/botao-seguir-sombra.png" alt="Seta para Esquerda">
+      </button>
+      <button class="manequim__seta manequim__seta--dir" type="button" aria-label="Ver o próximo look">
+        <img src="img/1x/botao-seguir-sombra.png" alt="Seta para Direita">
+      </button>
+      
+      <!-- estrelas (posição e tamanho: manequim.css) -->
+      <img class="manequim__estrela e1" src="img/garimpar/manequim/4x/estrela-roxa@4x.png" alt="Estrela rosa" aria-hidden="true">
+      <img class="manequim__estrela e2" src="img/garimpar/manequim/4x/estrela-azul@4x.png" alt="Estrela azul" aria-hidden="true">
+      <img class="manequim__estrela e3" src="img/garimpar/manequim/4x/estrela-rosa@4x.png" alt="Estrela rosa" aria-hidden="true">
+      <img class="manequim__estrela e4" src="img/garimpar/manequim/4x/estrela-laranja@4x.png" alt="Estrela laranja" aria-hidden="true">
+      <img class="manequim__estrela e5" src="img/garimpar/manequim/4x/estrela-roxa@4x.png" alt="Estrela roxa" aria-hidden="true">
+      <img class="manequim__estrela e6" src="img/garimpar/manequim/4x/estrela-lima@4x.png" alt="Estrela verde-lima" aria-hidden="true">
+      <img class="manequim__estrela e7" src="img/garimpar/manequim/4x/estrela-laranja@4x.png" alt="Estrela laranja" aria-hidden="true">
+
+    </div>
+  </section>
+
+   <!-- RODAPÉ -->
+  <footer class="rodape" id="rodape">
+    <div class="rodape__corte" aria-hidden="true"></div>
+
+        <div class="rodape__arte" role="img" aria-label="RE.CORTE, com uma tesoura" alt = "Tesoura com a palavra RE.CORTE">
+      <div class="rodape__arte-repouso"></div>
+      <div class="rodape__arte-hover"></div>
+    </div>
+
+    <div class="rodape__alvo rodape__alvo--tesoura" aria-hidden="true"></div>
+    <div class="rodape__alvo rodape__alvo--letras" aria-hidden="true"></div>
+   
+
+    <p class="rodape__legenda">
+      RE.CORTE - O LEGADO DAS CULTURAS PERIFÉRICAS<br>
+      2º SEMESTRE - PRODUÇÃO MULTIMÍDIA - SENAC NAÇÕES UNIDAS, 2026
+    </p>
+  </footer>
+
+  <script src="cabecalho.js"></script>
+  <script src="acessibilidade.js"></script>
+  <script src="garimpar.js"></script>
+    <script src="manequim.js"></script>
+      <script src="rodape.js"></script>
+      <script src="ajuda.js"></script>
+            <script src="cards.js"></script>
+  <script src="legendas.js"></script>
+</body>
+</html>

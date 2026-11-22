@@ -1,0 +1,223 @@
+/* ================= MANEQUIM ================= */
+@property --cor {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #1557ff;
+}
+
+.manequim {
+  min-height: calc(100vh - var(--altura-cabecalho, 5.75rem));
+  display: grid;
+  place-items: center;
+  padding: 0;
+  overflow: hidden;
+    background: #f6f4f8;
+  position: relative;
+  transition: --cor 0.6s ease;
+}
+
+/* palco: ocupa a tela inteira; tudo é posicionado em % dele */
+.manequim__palco {
+  position: relative;
+  width: 100vw;
+  height: calc(110vh - var(--altura-cabecalho, 5.75rem));
+    z-index: 1;
+}
+
+/* frase */
+.manequim__dica {
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  translate: -50% -50%;
+  width: 80%;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: clamp(1rem, 1.9vw, 2rem);
+  line-height: 1.2;
+}
+.manequim__dica span[aria-hidden] { text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.18); }
+.so-leitor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+
+
+/* seta da direita */
+.manequim__seta {
+  position: absolute;
+  left: 64%;
+  top: 52%;
+  width: clamp(2.2rem, 2.8vw, 3.6rem);
+  translate: -50% -50%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+    z-index: 3;
+}
+.manequim__seta img {
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+/* pressionar = afundar para trás (baixo-esquerda, como o botão do cabeçalho).
+   A seta da esquerda é espelhada (scale: -1 1), então o movimento espelha junto. */
+.manequim__seta:hover,
+.manequim__seta:focus-visible { transform: translate(-3px, 3px); }
+.manequim__seta:active { transform: translate(-4px, 4px); }
+.manequim__seta:focus-visible { outline: 3px solid var(--azul); outline-offset: 4px; }
+
+/* estrelas: left/top = centro (% da tela), width = tamanho */
+.manequim__estrela {
+  position: absolute;
+  height: auto;
+  translate: -50% -50%;
+  image-rendering: pixelated;
+  pointer-events: none;
+  animation: estrela-pula var(--dur, 2s) ease-in-out var(--atraso, 0s) infinite;
+}
+.e1 { left: 14%; top: 16%; width: 1.7%; }
+.e2 { left: 29%; top: 33%; width: 3%; }
+.e3 { left: 8%;  top: 50%; width: 5%; }
+.e4 { left: 23%; top: 76%; width: 3%; }
+.e5 { left: 72%; top: 80%; width: 1.7%; }
+.e6 { left: 90%; top: 56%; width: 3.8%; }
+.e7 { left: 82%; top: 22%; width: 3%; }
+
+@keyframes estrela-pula {
+  0%, 55%, 100% { transform: translateY(0); }
+  25%           { transform: translateY(-40%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manequim__estrela { animation: none; }
+}
+/* manchas de cor (mudam com a coleção) */
+.manequim::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(52% 46% at 2% 50%,  color-mix(in srgb, var(--cor) 42%, transparent), transparent),
+    radial-gradient(46% 44% at 96% 16%, color-mix(in srgb, var(--cor) 40%, transparent), transparent),
+    radial-gradient(40% 40% at 86% 56%, color-mix(in srgb, var(--cor) 32%, transparent), transparent),
+        radial-gradient(36% 36% at 60% 62%, color-mix(in srgb, var(--cor) 22%, transparent), transparent),
+           radial-gradient(30% 16% at 34% 100%, color-mix(in srgb, var(--cor) 12%, transparent), transparent),
+    radial-gradient(38% 20% at 52% 104%, color-mix(in srgb, var(--cor) 16%, transparent), transparent),
+    radial-gradient(32% 20% at 90% 100%, color-mix(in srgb, var(--cor) 22%, transparent), transparent);
+}
+
+/* manequim principal (vira link nos looks) */
+.manequim__link {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  height: 74%;
+  translate: -50% -50%;
+  display: block;
+  z-index: 2;
+}
+.manequim__boneco {
+  display: block;
+  height: 100%;
+  width: auto;
+  image-rendering: pixelated;
+}
+
+
+/* vizinhos desfocados */
+.manequim__vizinho {
+  position: absolute;
+  top: 55%;
+  height: 60%;
+  translate: -50% -50%;
+  opacity: 0.45;
+  filter: blur(5px);
+  image-rendering: pixelated;
+  pointer-events: none;
+  z-index: 1;
+}
+.manequim__vizinho--esq { left: 28%; }
+.manequim__vizinho--dir { left: 72%; }
+
+/* nome e texto da coleção */
+.manequim__colecao {
+  position: absolute;
+  left: 50%;
+  top: 4%;
+  translate: -50% 0;
+  width: max-content;
+  max-width: 94%;
+  z-index: 2;
+}
+.manequim__nome {
+  font-family: var(--fonte-titulo);
+      font-size: clamp(2.2rem, 4.2vw, 4.8rem);
+  line-height: 1;
+  text-align: center;
+  color: var(--cor);
+}
+.manequim__texto {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  translate: -50% 0;
+  width: 17em;            /* larga o bastante para a parte em negrito caber numa linha só */
+  margin-top: -0.4rem;
+  font: 500 clamp(0.75rem, 0.95vw, 1rem) "Montserrat", sans-serif;
+  line-height: 1.3;
+  text-align: center;
+  color: #1a1a2e;
+}
+.manequim__texto strong {
+  display: block;         /* destaque sempre em linha própria: o texto fica em 3 linhas e não encosta no manequim */
+  font-weight: 800;
+  color: var(--cor);
+}
+.manequim__colecao[hidden],
+.manequim__dica[hidden],
+.manequim__seta[hidden] { display: none; }
+
+/* seta esquerda (espelhada) */
+.manequim__seta--esq { left: 36%; scale: -1 1; }
+
+/* pop-up "clique aqui" que flutua atrás do cursor */
+.manequim__cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: clamp(8rem, 11vw, 12rem);
+  height: auto;
+  z-index: 9999;
+  pointer-events: none;
+  image-rendering: pixelated;
+  transform-origin: 50% 0;
+  opacity: 0;
+  scale: 0.6;
+  will-change: translate, rotate;
+  /* saída rápida: some logo ao sair da roupa */
+  transition: opacity 0.1s ease-out, scale 0.12s ease-out;
+}
+.manequim__cursor--visivel {
+  opacity: 1;
+  scale: 1;
+  /* entrada com um pulinho */
+  transition: opacity 0.18s ease, scale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (hover: none) {
+  .manequim__cursor { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .manequim__cursor,
+  .manequim__cursor--visivel { transition: none; }
+}

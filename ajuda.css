@@ -1,0 +1,181 @@
+/* ajuda.css: popup de ajuda de cada página */
+:root {
+   --aj-largura: 68vw;
+  --aj-titulo: 2.1vw;
+  --aj-sub: 1.9vw;
+  --aj-texto: 0.95vw;
+  --aj-img: 8.5vw;
+  --aj-gap: 2.5vw;
+
+  /* área do conteúdo dentro da moldura */
+  --aj-esq: 7%;
+  --aj-dir: 7%;
+  --aj-topo: 15%;
+  --aj-base: 22%;
+
+  /* botão de fechar (fica sobre o X vermelho da moldura) */
+  --aj-fechar-x: 87%;
+  --aj-fechar-y: 3.5%;
+  --aj-fechar-tam: 5.2%;
+
+  --aj-azul: #1557ff;
+  --aj-laranja: #ff5a1f;
+  --aj-roxo: #7628ff;
+}
+
+.ajuda {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 10, 20, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s, visibility 0.25s;
+}
+.ajuda.is-aberto { opacity: 1; visibility: visible; }
+
+.ajuda__caixa {
+  position: relative;
+  width: var(--aj-largura);
+  transform: scale(0.96);
+  transition: transform 0.25s;
+}
+.ajuda.is-aberto .ajuda__caixa { transform: none; }
+
+/* fundo claro por trás da moldura, caso o centro dela seja transparente */
+
+
+.ajuda__moldura {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+.ajuda__fechar {
+  position: absolute;
+  z-index: 3;
+  left: var(--aj-fechar-x);
+  top: var(--aj-fechar-y);
+  width: var(--aj-fechar-tam);
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.ajuda__fechar:focus-visible { outline: 3px solid var(--aj-azul); border-radius: 50%; }
+
+.ajuda__conteudo {
+  position: absolute;
+  z-index: 2;
+  left: var(--aj-esq);
+  right: var(--aj-dir);
+  top: var(--aj-topo);
+  bottom: var(--aj-base);
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: var(--aj-gap);
+    align-items: start;
+  align-content: center;
+  font-family: "Montserrat", sans-serif;
+  color: #1a1a1a;
+}
+
+.ajuda__titulo {
+  margin: 0;
+  font-family: var(--fonte-titulo, "Montserrat", sans-serif);
+  font-weight: 500;
+  font-size: var(--aj-titulo);
+  line-height: 1.05;
+  text-transform: uppercase;
+  color: var(--aj-azul);
+}
+.ajuda__sub {
+  margin: 0.4vw 0 0;
+  font-size: var(--aj-sub);
+  color: var(--aj-laranja);
+}
+.ajuda__intro { margin: 0; font-size: var(--aj-texto); line-height: 1.4; }
+
+/* colunas: a coluna da esquerda e os exemplos */
+.ajuda__esq,
+.ajuda__ex {
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+}
+.ajuda__ex { align-items: center; text-align: center; }
+.ajuda__ex p { margin: 0; font-size: var(--aj-texto); line-height: 1.4; }
+
+/* parte de cima: mesma altura nas três colunas, para os textos começarem juntos */
+.ajuda__cab,
+.ajuda__ex-img {
+  display: flex;
+  height: var(--aj-img);
+}
+.ajuda__cab { flex-direction: column; justify-content: flex-end; }
+.ajuda__ex-img { align-items: flex-end; justify-content: center; }
+.ajuda__ex-img img,
+.ajuda__ex-img svg { height: 100%; width: auto; image-rendering: pixelated; }
+/* destaques de cor no texto */
+.ajuda b { font-weight: 700; }
+.ajuda .o { color: var(--aj-laranja); }
+.ajuda .r { color: var(--aj-roxo); }
+
+/* itens dentro do texto */
+.aj-x {
+  display: inline-block;
+  width: 1.15em;
+  height: 1.15em;
+  line-height: 1.05em;
+  border-radius: 50%;
+  border: 2px solid #1a1a1a;
+  background: #d92f2f;
+  color: #1a1a1a;
+  font-size: 0.9em;
+  font-weight: 800;
+  text-align: center;
+  vertical-align: -0.2em;
+}
+.aj-info { font-weight: 700; }
+.aj-botao { height: 1.5em; width: auto; vertical-align: -0.4em; }
+
+/* telas estreitas: o conteúdo empilha */
+@media (max-width: 800px) {
+  :root { --aj-largura: 94vw; --aj-titulo: 4.6vw; --aj-sub: 4vw; --aj-texto: 2.4vw; --aj-img: 16vw; }
+}
+.aj-pill {
+  display: inline-block;
+  padding: 0 0.7em;
+  border: 1.5px solid #1a1a1a;
+  border-radius: 1em;
+  background: #fff;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1.6;
+  vertical-align: 0.05em;
+}
+.ajuda__ex-img img[src*="seta"] { height: 75%; }
+
+/* "i" e peça de quebra-cabeça menores */
+.ajuda__ex-img img[src*="botaoajuda"] { height: 70%; }
+.ajuda__ex-img svg.aj-peca { height: 70%; }
+
+/* peça flutuando, com sombra, como na página das coleções */
+.aj-peca { filter: drop-shadow(0 0.3vw 0.5vw rgba(0, 0, 0, 0.35)); }
+
+/* respiro entre "Eita, o que é isso?" e o texto */
+.aj-tit { display: block; margin-bottom: 0.5vw; }
+.ajuda__ex-img svg.aj-cadeado { height: 70%; }
+
+/* foto da equipe (página Sobre): recorta os cantos brancos do JPEG em círculo */
+.ajuda__ex-img img[src*="fotoequipe"] {
+  height: 85%;
+  border-radius: 50%;
+}

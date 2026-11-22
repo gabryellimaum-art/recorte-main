@@ -1,0 +1,299 @@
+/* ========== VARIÁVEIS (valem no site todo) ========== */
+:root {
+  /* paleta oficial RE.CORTE */
+  --azul: #1557ff;
+  --lima: #c8f000;
+  --branco: #ffffff;
+  --laranja: #ff5a1f;
+  --rosa: #ff2e8a;
+  --roxo: #7628ff;
+
+  --azul-fundo: var(--azul);  /* azul usado como FUNDO (capa); no escuro não clareia */
+
+  --ui-fundo: #ffffff;
+  --ui-texto: #0b1230;
+  --ui-texto-suave: #3a4163;
+
+  /* superfícies das páginas (colecao.css usa estas variáveis) */
+  --ui-papel: #f6f4f8;        /* fundo da página */
+  --ui-corpo: #1a1a2e;        /* texto corrido */
+  --ui-cartao: #f6f4f8;       /* miolo dos cartões */
+  --ui-faixa-cartao: #b8c8ff; /* faixa na base dos cartões */
+}
+
+/* ---------- TAMANHO DO TEXTO (tudo em rem acompanha) ---------- */
+html[data-tamanho="0"] { font-size: 87.5%; }
+html[data-tamanho="1"] { font-size: 100%; }
+html[data-tamanho="2"] { font-size: 112.5%; }
+html[data-tamanho="3"] { font-size: 125%; }
+html[data-tamanho="4"] { font-size: 150%; }
+
+/* ---------- MODO ESCURO ----------
+   Fundo #14162b. Contraste (WCAG) de cada cor da paleta sobre ele:
+   laranja 5,7 | rosa 5,1 | lima 14 | branco 16  -> mantêm o tom original
+   azul #1557FF = 3,3 e roxo #7628FF = 3,0       -> não passam em texto (mín. 4,5)
+   por isso ganham versões mais claras (6,2 e 5,4), do mesmo matiz. */
+html[data-tema="escuro"] {
+  color-scheme: dark;
+  --ui-fundo: #14162b;
+  --ui-texto: #ffffff;
+  --ui-texto-suave: #c9cde6;
+  --ui-papel: #14162b;
+  --ui-corpo: #ffffff;
+  --ui-cartao: #191b35;
+  --ui-faixa-cartao: #26379b;
+  --azul: #6f93ff;
+  --roxo: #a272ff;
+}
+
+/* texto colorido das coleções (fundos e molduras continuam na cor original) */
+html[data-tema="escuro"] .colecao--raizes { --cor-colecao-texto: var(--roxo); }
+html[data-tema="escuro"] body {
+  background-color: #14162b;
+  background-blend-mode: multiply;
+  color: var(--ui-texto);
+}
+
+/* RODAPÉ: no escuro usa o fundo da página (#14162b) em vez do azul claro.
+   Para voltar ao azul claro, troque por: var(--azul) */
+html[data-tema="escuro"] { --rodape-fundo: var(--ui-fundo); }
+html[data-tema="escuro"] .rodape { background-color: var(--rodape-fundo); }
+
+/* ícones pretos do menu (Início, Coleções, Voltar, Ajustes...) viram brancos */
+html[data-tema="escuro"] .cab-icone {
+  filter: invert(1);
+}
+
+/* ---------- CORES (paletas provisórias) ---------- */
+html[data-cor="deuteranopia"],
+html[data-cor="protanopia"] {
+  --azul: #0072b2;
+  --lima: #f0e442;
+}
+html[data-cor="tritanopia"] {
+  --azul: #cc3311;
+  --lima: #66ccee;
+}
+
+/* mesmas paletas, com o tom principal clareado para ler sobre fundo escuro */
+html[data-tema="escuro"][data-cor="deuteranopia"],
+html[data-tema="escuro"][data-cor="protanopia"] {
+  --azul: #56b4e9;
+  --lima: #f0e442;
+}
+html[data-tema="escuro"][data-cor="tritanopia"] {
+  --azul: #ee6677;
+  --lima: #66ccee;
+}
+
+/* fundos azuis (capa): no escuro mantêm o tom original da paleta, para o texto
+   branco continuar legível (branco sobre #6f93ff teria contraste 2,9) */
+html[data-tema="escuro"] { --azul-fundo: #1557ff; }
+html[data-tema="escuro"][data-cor="deuteranopia"],
+html[data-tema="escuro"][data-cor="protanopia"] { --azul-fundo: #0072b2; }
+html[data-tema="escuro"][data-cor="tritanopia"] { --azul-fundo: #cc3311; }
+html[data-tema="escuro"] .tela { background-color: var(--azul-fundo); }
+
+/* ---------- GARIMPAR no modo escuro ----------
+   Capa + faixa (.tela) e seção do manequim usam o fundo #14162b em vez do azul;
+   os textos ficam brancos e as setas do carrossel trocam de imagem. */
+html[data-tema="escuro"] .tela,
+html[data-tema="escuro"] .manequim {
+  background: #14162b;
+}
+
+html[data-tema="escuro"] .capa__frase,
+html[data-tema="escuro"] .faixa__nome,
+html[data-tema="escuro"] .manequim__dica,
+html[data-tema="escuro"] .manequim__texto,
+html[data-tema="escuro"] .manequim__dica span {   /* o JS pinta cada letra da dica com cor inline */
+  color: #ffffff !important;
+}
+
+/* setas: esconde o png antigo (o tamanho do botão continua o mesmo) e usa os novos.
+   Como no cabeçalho, o botão troca de imagem ao passar o mouse / focar / clicar.
+   A imagem pressionada tem a tela 5% mais estreita (1480 de 1560 px), por isso o
+   tamanho 94,87%: o círculo fica do mesmo tamanho e "afunda" para a esquerda. */
+html[data-tema="escuro"] .manequim__seta img {
+  object-position: -9999px 0;
+  background: url("img/garimpar/manequim/4x/setanormal@4x.png") left top / 100% auto no-repeat;
+}
+/* no escuro quem "afunda" é a própria imagem pressionada: sem o deslocamento do manequim.css */
+html[data-tema="escuro"] .manequim__seta:hover,
+html[data-tema="escuro"] .manequim__seta:focus-visible,
+html[data-tema="escuro"] .manequim__seta:active { transform: none; }
+
+html[data-tema="escuro"] .manequim__seta:hover img,
+html[data-tema="escuro"] .manequim__seta:focus-visible img,
+html[data-tema="escuro"] .manequim__seta:active img {
+  background-image: url("img/garimpar/manequim/4x/setapressionada@4x.png");
+  background-size: 94.87% auto;
+}
+
+/* ---------- RODAPÉ e SOBRE no modo escuro ---------- */
+
+/* azul de fundo do rodapé (o bloco azul do rodapé é o ::before, por isso o
+   background-color do .rodape acima não aparecia nele) e do bloco azul da página Sobre */
+html[data-tema="escuro"] .rodape::before { background: #002687; }
+html[data-tema="escuro"] .sobre__azul    { background: #002687; }
+
+/* topo "QUEM SOMOS?" igual à capa da página inicial: fundo #14162b, texto e pontilhado brancos */
+html[data-tema="escuro"] .sobre { --topo-fundo: #14162b; }
+
+html[data-tema="escuro"] .sobre__corte,
+html[data-tema="escuro"] .sobre__topo::after {
+  background-image: repeating-linear-gradient(90deg, #ffffff 0 1.6vw, transparent 1.6vw 3.2vw);
+}
+
+html[data-tema="escuro"] .sobre__titulo,
+html[data-tema="escuro"] .sobre__subtitulo {
+  color: #ffffff;
+}
+
+/* ---------- ARRETADO no modo escuro ----------
+   As imagens do ícone "i" e da seta são trocadas pelo colecao.js (versões "noturno").
+   A seta noturna pressionada tem a tela menor (1110 de 1170 px = 94,87%);
+   o ícone "i" continua em 80 ÷ 84, que já está no colecao.css. */
+html[data-tema="escuro"] .colecao--arretado .colecao__seta .img-pressionada { width: 94.87%; }
+
+/* ---------- TOPO DAS COLEÇÕES no modo escuro ----------
+   O topo (Arretado, Faveleiras, Raízes Vivas) deixa de ser colorido: o fundo vira #14162b
+   e o título e o subtítulo passam a usar a cor da coleção (laranja, rosa, roxo).
+   O selo "CONHECER" e as estrelinhas continuam brancos (são imagens). */
+html[data-tema="escuro"] .colecao__topo { background: #14162b; }
+html[data-tema="escuro"] .colecao__titulo,
+html[data-tema="escuro"] .colecao__subtitulo {
+  color: var(--cor-colecao);   /* cor original da coleção; para o roxo mais claro use var(--cor-colecao-texto) */
+}
+
+/* ---------- POPUP "QUE ACHADO!" no modo escuro ----------
+   A moldura é trocada por popupachadomodonoturno@4x.png (acessibilidade.js);
+   aqui os textos que eram azul-marinho ficam brancos. O título e o nome da peça
+   usam a cor de texto da coleção (a versão clareada, que lê bem sobre o escuro). */
+html[data-tema="escuro"] .eg-popup__achou,
+html[data-tema="escuro"] .eg-popup__texto {
+  color: #ffffff;
+}
+html[data-tema="escuro"] .eg-popup__aviso,
+html[data-tema="escuro"] .eg-popup__nome {
+  color: var(--cor-colecao-texto, var(--cor-colecao));
+}
+
+/* ---------- POPUP DE AJUDA no modo escuro ----------
+   A moldura é trocada por molduraajudamodonoturno@4x.png (acessibilidade.js).
+   Aqui: texto branco, azul e roxo clareados (como no resto do modo escuro),
+   e as peças desenhadas no código (quebra-cabeça, cadeado, "i") em branco. */
+html[data-tema="escuro"] .ajuda {
+  --aj-azul: #6f93ff;
+  --aj-roxo: #a272ff;
+}
+html[data-tema="escuro"] .ajuda__conteudo { color: #ffffff; }
+
+/* botão "× " e "? Ajuda" que aparecem dentro do texto */
+html[data-tema="escuro"] .aj-x { border-color: #ffffff; color: #ffffff; }
+html[data-tema="escuro"] .aj-pill {
+  background: transparent;
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+/* peça de quebra-cabeça: preta -> branca, com brilho no lugar da sombra */
+html[data-tema="escuro"] .aj-peca path { fill: #ffffff; }
+html[data-tema="escuro"] .aj-peca { filter: drop-shadow(0 0.3vw 0.5vw rgba(255, 255, 255, 0.28)); }
+
+/* cadeado: corpo branco e furinho na cor do fundo */
+html[data-tema="escuro"] .aj-cadeado rect { fill: #ffffff; }
+html[data-tema="escuro"] .aj-cadeado rect[fill] { fill: #14162b; }
+
+/* ícone "i" (imagem preta): vira branco */
+html[data-tema="escuro"] .ajuda__ex-img img[src*="botaoajuda"] { filter: invert(1); }
+
+/* ========== BOTÃO DE FERRAMENTAS ========== */
+.acess-botao {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 10000;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.18s steps(4);
+}
+.acess-botao img {
+  display: block;
+  width: 3.25rem;
+  height: auto;
+  image-rendering: pixelated;
+}
+.acess-botao:hover,
+.acess-botao:focus-visible,
+.acess-botao[aria-expanded="true"] {
+  transform: translateY(-3px) scale(1.08);
+}
+.acess-botao:active { transform: translateY(1px) scale(0.96); }
+
+/* ========== PAINEL ========== */
+.acess-painel {
+  position: fixed;
+  top: 4.5rem;
+  right: 1.25rem;
+  z-index: 10000;
+  width: 12.5rem;
+  padding: 0.7rem;
+  background: var(--ui-fundo);
+  color: var(--ui-texto);
+  border: 3px solid var(--azul);
+  box-shadow: 4px 4px 0 var(--azul);
+  font-family: "Montserrat", sans-serif;
+}
+.acess-painel[hidden] { display: none; }
+
+.acess-grupo { margin-bottom: 0.7rem; }
+.acess-grupo:last-child { margin-bottom: 0; }
+
+.acess-grupo h2 {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.35rem;
+}
+
+.acess-linha {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.acess-opcao {
+  flex: 1 1 auto;
+  padding: 0.35rem 0.4rem;
+  font: 600 0.68rem "Montserrat", sans-serif;
+  color: var(--ui-texto);
+  background: transparent;
+  border: 2px solid var(--azul);
+  cursor: pointer;
+}
+.acess-opcao:hover { background: var(--lima); color: #0b1230; }
+.acess-opcao[aria-pressed="true"] {
+  background: var(--azul);
+  color: #ffffff;
+}
+.acess-opcao:disabled { opacity: 0.4; cursor: not-allowed; }
+html[data-tema="escuro"] .acess-opcao[aria-pressed="true"] {
+  color: #0b1230;
+}
+html[data-tema="escuro"] .acess-opcao[aria-pressed="true"]:hover {
+  background: var(--lima);
+}
+
+.acess-botao:focus-visible,
+.acess-opcao:focus-visible {
+  outline: 3px solid var(--lima);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .acess-botao { transition: none; }
+}
