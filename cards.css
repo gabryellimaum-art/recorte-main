@@ -247,12 +247,12 @@
     --cp-card-w: calc(var(--cp-largura) * 0.255);  /* largura de cada card */
     --cp-gap: calc(var(--cp-largura) * 0.03);      /* espaço entre os cards */
 
-    --cp-titulo: 3.5vw;    /* título do topo */
-    --cp-texto: 3vw;     /* frase de baixo */
+    --cp-titulo: 3.1vw;    /* título do topo */
+    --cp-texto: 2.7vw;     /* frase de baixo */
   }
 
   /* título: troca "Passe o mouse" por "Toque nos cards" (o texto original fica escondido) */
-  .cp-titulo { font-size: 0; line-height: 0; translate: none; }
+  .cp-titulo { font-size: 0; line-height: 0; translate: 0 -2.4vw; }
   .cp-titulo::after {
     content: "Toque nos cards\Apara conhecer cada RECORTE";
     display: block;
@@ -273,7 +273,7 @@
   .cp-card--criar .cp-verso__texto { --vp: 8%; }
 
   /* frase de baixo: maior, e "? Ajuda" vira só o texto Ajuda */
-  .cp-rodape { font-size: var(--cp-texto); translate: none; gap: 0; }
+  .cp-rodape { font-size: var(--cp-texto); translate: 0 1.8vw; gap: 0; }
   .cp-pill { font-size: 0; padding: 0; border: 0; background: none; }
   .cp-pill::after { content: "Ajuda"; font-size: var(--cp-texto); font-weight: 800; color: var(--cp-azul); }
 
