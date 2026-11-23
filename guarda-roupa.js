@@ -730,3 +730,15 @@
   });
   armario.addEventListener("mouseleave", function () { dica.style.display = "none"; });
 })();
+
+/* aviso "vire o celular": some ao tocar na tela */
+(function () {
+  var aviso = document.createElement("div");
+  aviso.className = "gr-aviso";
+  aviso.innerHTML =
+    '<span class="gr-aviso__icone" aria-hidden="true">↻</span>' +
+    '<p class="gr-aviso__texto">Vire o celular<br>para jogar</p>' +
+    '<p class="gr-aviso__fechar">toque para fechar</p>';
+  aviso.addEventListener("click", function () { aviso.remove(); });
+  document.body.appendChild(aviso);
+})();

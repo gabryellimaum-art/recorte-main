@@ -167,7 +167,7 @@ html[data-tema="escuro"] .cab-botao:active {
 /* ================= CELULAR: menu de 3 risquinhos ================= */
 .cab-hamburguer { display: none; }
 
-@media (max-width: 800px) {
+@media (max-width: 800px), (max-height: 500px) and (orientation: landscape) {
   .cabecalho { padding: 0.3rem 0; }
 
   .cab-hamburguer {

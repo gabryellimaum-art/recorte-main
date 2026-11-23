@@ -439,37 +439,46 @@ html[data-tema="escuro"] .gr__aba span { color: #ffffff; }
 .gr__armario.is-aberto .gr__reiniciar-tudo:hover { opacity: 1; text-decoration: underline; }
 
 /* ================= CELULAR ================= */
-/* em pé: esconde o jogo e pede para virar o celular */
-@media (max-width: 800px) and (orientation: portrait) {
-  .gr {
-    flex-direction: column;
-    justify-content: center;
-    min-height: calc(100svh - var(--altura-cabecalho, 6.1rem));
-    gap: 6vw;
-  }
-  .gr__palco { display: none; }
+.gr-aviso { display: none; }
 
-  .gr::before {
-    content: "↻";
+/* em pé: mensagem transparente por cima do jogo */
+@media (max-width: 800px) and (orientation: portrait) {
+  .gr-aviso {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    top: var(--altura-cabecalho, 5rem);
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5vw;
+    background: rgba(246, 244, 248, 0.82);   /* menor = mais transparente */
+    color: #1557ff;
+    text-align: center;
+    cursor: pointer;
+  }
+  .gr-aviso__icone {
     font-size: 24vw;
     line-height: 1;
-    color: #1557ff;
     animation: gr-gira 2.4s ease-in-out infinite;
   }
-  .gr::after {
-    content: "Vire o celular\A para jogar";
-    white-space: pre;
-    text-align: center;
-    font: 700 7vw/1.2 "Montserrat", sans-serif;
-    color: #1557ff;
-  }
+  .gr-aviso__texto { margin: 0; font: 700 7vw/1.2 "Montserrat", sans-serif; }
+  .gr-aviso__fechar { margin: 0; font: 600 3.6vw/1 "Montserrat", sans-serif; opacity: 0.7; }
 }
 @keyframes gr-gira {
   0%, 20% { transform: rotate(0deg); }
   80%, 100% { transform: rotate(-90deg); }
 }
 
-/* deitado: o jogo cabe na altura baixa da tela */
+/* deitado: jogo grande, ocupando a altura da tela */
 @media (max-height: 500px) and (orientation: landscape) {
-  :root { --palco-altura: min(44vw, 74vh); }
+  :root {
+    --palco-altura: calc((100svh - var(--altura-cabecalho, 3.2rem)) * 0.92);
+    --palco-descer: 0vh;
+    --palco-gap: 4vw;
+    --gr-lados: 2vw;
+    --gr-fundo: 4vw;
+  }
+  .gr { min-height: calc(100svh - var(--altura-cabecalho, 3.2rem)); }
 }
