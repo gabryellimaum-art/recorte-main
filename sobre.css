@@ -503,3 +503,87 @@ body.sobre {
   height: auto;
   display: block;
 }
+
+/* =========================================================
+   CELULAR (até 800px): tudo em uma coluna, um bloco embaixo do outro
+   ========================================================= */
+@media (max-width: 800px) {
+  :root {
+    --espaco: 11vw;        /* espaço entre os blocos (maior = mais espaço) */
+    --recuo: 7vw;          /* margem esquerda e direita */
+    --rolo-w: 34vw;        /* tamanho do rolo de linha */
+  }
+
+  /* títulos: centralizados e podem quebrar em duas linhas */
+  .sobre__h2 { white-space: normal; text-align: center; }
+
+  /* ---- 1 a 4: Três coleções, rolo, texto, frase ---- */
+  .sobre__quadro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--espaco);
+    padding-block: 1.5rem 0;
+  }
+  .sobre__chamada { font-size: 1.7rem; text-align: center; white-space: normal; align-self: center; }
+  .sobre__rolo { width: var(--rolo-w); margin: 0; align-self: center; justify-self: center; }
+  .sobre__quadro .sobre__texto { width: 100%; }
+  .sobre__frase { align-self: center; justify-self: center; width: auto; margin: 0; white-space: normal; text-align: center; font-size: 1.1rem; line-height: 1.15; }
+  .sobre__frase br { display: none; }
+  .sobre__frase--esq { display: none; }   /* "Aqui, a roupa é..." removida no celular */
+
+  /* ---- 5 a 7: De onde veio a inspiração ---- */
+  .sobre__duas-colunas:not(.sobre__duas-colunas--upcycling) {
+    grid-template-columns: 1fr;
+    grid-template-areas: "titulo" "esq" "dir";
+    column-gap: 0;
+    row-gap: 1.6rem;
+  }
+  .sobre__duas-colunas:not(.sobre__duas-colunas--upcycling) > .sobre__h2 { margin-bottom: 0.4rem; }
+
+  /* ---- 8 e 9: Upcycling (título, textos e imagem embaixo) ---- */
+  .sobre__duas-colunas--upcycling {
+    grid-template-columns: 1fr;
+    grid-template-areas: "dir" "reserva";
+    column-gap: 0;
+    row-gap: var(--espaco);
+  }
+  .sobre__coluna-dir .sobre__h2 { margin-bottom: 1.4rem; }
+  .sobre__reserva {
+    --sombra: 2.4vw;
+    --fita: 3.2vw;
+    --escada: polygon(
+      1.6vw 0, calc(100% - 1.6vw) 0, calc(100% - 1.6vw) 0.8vw,
+      calc(100% - 0.8vw) 0.8vw, calc(100% - 0.8vw) 1.6vw, 100% 1.6vw,
+      100% calc(100% - 1.6vw), calc(100% - 0.8vw) calc(100% - 1.6vw),
+      calc(100% - 0.8vw) calc(100% - 0.8vw), calc(100% - 1.6vw) calc(100% - 0.8vw),
+      calc(100% - 1.6vw) 100%, 1.6vw 100%, 1.6vw calc(100% - 0.8vw),
+      0.8vw calc(100% - 0.8vw), 0.8vw calc(100% - 1.6vw), 0 calc(100% - 1.6vw),
+      0 1.6vw, 0.8vw 1.6vw, 0.8vw 0.8vw, 1.6vw 0.8vw
+    );
+    justify-self: center;
+    translate: none;
+    width: 100%;
+    margin-left: 0;
+    padding: 6vw calc(var(--sombra) + 5vw) calc(var(--sombra) + 5vw) 6vw;
+  }
+
+  /* ---- 12, 13 e 15: frases finais centralizadas ---- */
+  .sobre__fecho { white-space: normal; text-align: center; font-size: 1.05rem; }
+  .sobre__fecho br { display: none; }
+
+  /* ---- 17: palavras-chave (título no centro, texto embaixo, sem seta) ---- */
+  .sobre__lista { padding: 0; }
+  .sobre__lista li { display: block; text-align: center; margin-bottom: 2.6rem; }
+  .sobre__seta { display: none; }
+  .sobre__palavra { display: block; font-size: 2rem; margin-bottom: 0.8rem; }
+
+  /* ---- 18: frase do projeto maior e centralizada ---- */
+  .sobre__integrantes > p {
+    width: auto;
+    margin: 0 var(--recuo) 8vw;
+    font-size: 1.05rem;
+    line-height: 1.35;
+    text-align: center;
+  }
+}
