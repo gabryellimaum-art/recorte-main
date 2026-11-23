@@ -441,8 +441,26 @@ html[data-tema="escuro"] .gr__aba span { color: #ffffff; }
 /* ================= CELULAR ================= */
 .gr-aviso { display: none; }
 
-/* em pé: mensagem transparente por cima do jogo */
+/* em pé: o jogo fica deitado (girado) e o aviso por cima */
 @media (max-width: 800px) and (orientation: portrait) {
+  :root {
+    --palco-altura: min(80vw, calc((100svh - var(--altura-cabecalho, 5rem)) * 0.42));
+    --palco-descer: 0vh;
+    --gr-fundo: 6vw;
+  }
+  .gr {
+    position: relative;
+    overflow: hidden;
+    min-height: calc(100svh - var(--altura-cabecalho, 5rem));
+  }
+  .gr__palco {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max-content;
+    transform: translate(-50%, -50%) rotate(90deg);   /* gira o jogo */
+  }
+
   .gr-aviso {
     position: fixed;
     left: 0; right: 0; bottom: 0;
@@ -476,7 +494,7 @@ html[data-tema="escuro"] .gr__aba span { color: #ffffff; }
   :root {
     --palco-altura: calc((100svh - var(--altura-cabecalho, 3.2rem)) * 0.92);
     --palco-descer: 0vh;
-    --palco-gap: 4vw;
+    --palco-gap: 14vw;      /* espaço entre a moldura e o guarda-roupa (maior = mais afastados) */
     --gr-lados: 2vw;
     --gr-fundo: 4vw;
   }
