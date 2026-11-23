@@ -509,20 +509,35 @@ body.sobre {
    ========================================================= */
 @media (max-width: 800px) {
   :root {
-    --espaco: 11vw;        /* espaço entre os blocos (maior = mais espaço) */
+    --espaco: 12vw;        /* espaço ENTRE blocos grandes (maior = mais espaço) */
+    --interno: 7vw;        /* espaço DENTRO de um bloco (título > texto, texto > frase) */
     --recuo: 7vw;          /* margem esquerda e direita */
     --rolo-w: 34vw;        /* tamanho do rolo de linha */
+    --inspiracao-texto-y: var(--interno);
+    --upc-titulo-y: var(--interno);
+    --palavras-lista-y: 0vw;
+    --minicards-y: 0vw;
   }
 
   /* títulos: centralizados e podem quebrar em duas linhas */
-  .sobre__h2 { white-space: normal; text-align: center; }
+  .sobre__h2 { white-space: normal; text-align: center; margin-bottom: var(--interno); }
+
+  /* textos corridos: todas as linhas terminam no mesmo lugar */
+  .sobre__quadro .sobre__texto,
+  .sobre__texto--esq,
+  .sobre__texto--dir,
+  .sobre__coluna-dir .sobre__texto {
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
 
   /* ---- 1 a 4: Três coleções, rolo, texto, frase ---- */
   .sobre__quadro {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--espaco);
+    gap: var(--interno);
     padding-block: 1.5rem 0;
   }
   .sobre__chamada { font-size: 1.7rem; text-align: center; white-space: normal; align-self: center; }
@@ -537,18 +552,19 @@ body.sobre {
     grid-template-columns: 1fr;
     grid-template-areas: "titulo" "esq" "dir";
     column-gap: 0;
-    row-gap: 1.6rem;
+    row-gap: 0;
   }
-  .sobre__duas-colunas:not(.sobre__duas-colunas--upcycling) > .sobre__h2 { margin-bottom: 0.4rem; }
+  .sobre__texto--dir { margin-top: 1.6rem; }
 
   /* ---- 8 e 9: Upcycling (título, textos e imagem embaixo) ---- */
   .sobre__duas-colunas--upcycling {
     grid-template-columns: 1fr;
     grid-template-areas: "dir" "reserva";
     column-gap: 0;
-    row-gap: var(--espaco);
+    row-gap: var(--interno);
   }
-  .sobre__coluna-dir .sobre__h2 { margin-bottom: 1.4rem; }
+  .sobre__coluna-dir .sobre__h2 { margin-bottom: var(--interno); }
+  .sobre__coluna-dir .sobre__texto { margin-bottom: 1.6rem; }
   .sobre__reserva {
     --sombra: 2.4vw;
     --fita: 3.2vw;
@@ -568,21 +584,36 @@ body.sobre {
     padding: 6vw calc(var(--sombra) + 5vw) calc(var(--sombra) + 5vw) 6vw;
   }
 
-  /* ---- 12, 13 e 15: frases finais centralizadas ---- */
-  .sobre__fecho { white-space: normal; text-align: center; font-size: 1.05rem; }
+  /* ---- jornada ---- */
+  .sobre__cards { margin-top: var(--interno); }
+  .sobre__jornada .sobre__fecho--jornada { margin-top: var(--interno); }
+
+  /* ---- frases finais: centralizadas, mesmo tamanho ---- */
+  body.sobre .sobre__fecho {
+    white-space: normal;
+    text-align: center;
+    font-size: 1.1rem !important;
+    line-height: 1.3;
+  }
   .sobre__fecho br { display: none; }
 
+  /* ---- três coleções ---- */
+  .sobre__colecoes .sobre__h2 { font-size: 1.7rem; }
+  .sobre__minicards { margin-top: 0; }
+  .sobre__colecoes .sobre__fecho { margin-top: var(--interno); }
+
   /* ---- 17: palavras-chave (título no centro, texto embaixo, sem seta) ---- */
-  .sobre__lista { padding: 0; }
-  .sobre__lista li { display: block; text-align: center; margin-bottom: 2.6rem; }
+  .sobre__lista { padding: 0; margin-top: 0; }
+  .sobre__lista li { display: block; text-align: center; margin-bottom: var(--interno); }
+  .sobre__lista li:last-child { margin-bottom: 0; }
   .sobre__seta { display: none; }
   .sobre__palavra { display: block; font-size: 2rem; margin-bottom: 0.8rem; }
 
-  /* ---- 18: frase do projeto maior e centralizada ---- */
+  /* ---- frase do projeto: menor e centralizada ---- */
   .sobre__integrantes > p {
     width: auto;
     margin: 0 var(--recuo) 8vw;
-    font-size: 1.05rem;
+    font-size: 0.85rem;
     line-height: 1.35;
     text-align: center;
   }
