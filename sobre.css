@@ -580,7 +580,7 @@ body.sobre {
     justify-self: center;
     translate: none;
     width: 100%;
-    margin-left: 0;
+    margin: 6vw 0 0;
     padding: 6vw calc(var(--sombra) + 5vw) calc(var(--sombra) + 5vw) 6vw;
   }
 
@@ -592,7 +592,9 @@ body.sobre {
   body.sobre .sobre__fecho {
     white-space: normal;
     text-align: center;
-    font-size: 1.1rem !important;
+        font-size: 1rem !important;
+    text-wrap: balance;
+    padding-inline: 3vw;
     line-height: 1.3;
   }
   .sobre__fecho br { display: none; }
@@ -612,7 +614,7 @@ body.sobre {
   /* ---- frase do projeto: menor e centralizada ---- */
   .sobre__integrantes > p {
     width: auto;
-    margin: 0 var(--recuo) 8vw;
+   margin: 0 var(--recuo) 3vw;
     font-size: 0.85rem;
     line-height: 1.35;
     text-align: center;
