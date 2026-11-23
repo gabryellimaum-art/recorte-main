@@ -513,6 +513,7 @@ body.sobre {
     --interno: 7vw;        /* espaço DENTRO de um bloco (título > texto, texto > frase) */
     --recuo: 7vw;          /* margem esquerda e direita */
     --rolo-w: 34vw;        /* tamanho do rolo de linha */
+        --card-largura: 13.5rem;   /* tamanho dos cards da jornada (antes 15rem) */
     --inspiracao-texto-y: var(--interno);
     --upc-titulo-y: var(--interno);
     --palavras-lista-y: 0vw;
@@ -615,7 +616,7 @@ body.sobre {
   .sobre__integrantes > p {
     width: auto;
    margin: 0 var(--recuo) 3vw;
-    font-size: 0.85rem;
+    font-size: 0.7rem;
     line-height: 1.35;
     text-align: center;
   }
