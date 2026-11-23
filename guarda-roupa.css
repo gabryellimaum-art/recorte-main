@@ -438,4 +438,38 @@ html[data-tema="escuro"] .gr__aba span { color: #ffffff; }
 .gr__armario.is-aberto .gr__reiniciar-tudo { opacity: 0.55; pointer-events: auto; }
 .gr__armario.is-aberto .gr__reiniciar-tudo:hover { opacity: 1; text-decoration: underline; }
 
+/* ================= CELULAR ================= */
+/* em pé: esconde o jogo e pede para virar o celular */
+@media (max-width: 800px) and (orientation: portrait) {
+  .gr {
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100svh - var(--altura-cabecalho, 6.1rem));
+    gap: 6vw;
+  }
+  .gr__palco { display: none; }
 
+  .gr::before {
+    content: "↻";
+    font-size: 24vw;
+    line-height: 1;
+    color: #1557ff;
+    animation: gr-gira 2.4s ease-in-out infinite;
+  }
+  .gr::after {
+    content: "Vire o celular\A para jogar";
+    white-space: pre;
+    text-align: center;
+    font: 700 7vw/1.2 "Montserrat", sans-serif;
+    color: #1557ff;
+  }
+}
+@keyframes gr-gira {
+  0%, 20% { transform: rotate(0deg); }
+  80%, 100% { transform: rotate(-90deg); }
+}
+
+/* deitado: o jogo cabe na altura baixa da tela */
+@media (max-height: 500px) and (orientation: landscape) {
+  :root { --palco-altura: min(44vw, 74vh); }
+}
