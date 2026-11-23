@@ -104,4 +104,5 @@
 
 @media (max-width: 800px) {
   .rodape__corte { top: 0.6rem; }   /* sobe a linha tracejada */
+    .rodape__legenda { font-size: 0.5rem; }
 }

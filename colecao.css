@@ -831,3 +831,11 @@ body.colecao { overflow-x: clip; }
 
 /* a seta que já tem imagem pressionada não precisa deslizar para o lado */
 .colecao__seta:has(.img-pressionada):hover { translate: none; }
+
+/* celular: afasta a imagem dos blocos de texto */
+@media (max-width: 800px) {
+  .colecao__mala {
+    margin-top: 2.2rem;      /* espaço acima da imagem */
+    margin-bottom: 2.2rem;   /* espaço abaixo da imagem */
+  }
+}
