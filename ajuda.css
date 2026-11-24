@@ -179,3 +179,105 @@
   height: 85%;
   border-radius: 50%;
 }
+
+/* =====================================================================
+   MOBILE: popup de ajuda legível e DENTRO da moldura
+   (só vale em telas estreitas; o desktop não muda)
+   A moldura vira uma imagem "esticável" (9 fatias) em vez da imagem
+   inteira, assim ela cresce em altura conforme o texto. Para ajustar:
+   --aj-u  = espessura do pixel da moldura
+   --aj-m-* = tamanhos do texto
+   ===================================================================== */
+@media (max-width: 800px) {
+  .ajuda {
+    --aj-u: 6px;
+    --aj-m-titulo: clamp(19px, 5.6vw, 24px);
+    --aj-m-sub: clamp(16px, 4.4vw, 20px);
+    --aj-m-texto: clamp(14px, 3.8vw, 16px);
+    box-sizing: border-box;
+    padding: 12px;
+  }
+
+  /* a moldura inteira some; entra a de 9 fatias como borda da caixa */
+  .ajuda__moldura { display: none; }
+
+  .ajuda__caixa {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: min(94vw, 560px);
+    max-height: 88vh;
+    max-height: 88dvh;
+    border-style: solid;
+    border-width: calc(var(--aj-u) * 2) calc(var(--aj-u) * 2) calc(var(--aj-u) * 3) calc(var(--aj-u) * 2);
+    border-image-source: url("img/ajuda/4x/molduraajuda-mobile.png");
+    border-image-slice: 48 48 72 48 fill;
+    border-image-width: calc(var(--aj-u) * 2) calc(var(--aj-u) * 2) calc(var(--aj-u) * 3) calc(var(--aj-u) * 2);
+    border-image-repeat: stretch;
+    image-rendering: pixelated;
+  }
+  html[data-tema="escuro"] .ajuda__caixa {
+    border-image-source: url("img/ajuda/4x/molduraajudamodonoturno-mobile.png");
+  }
+
+  /* botão de fechar: X pixelado no canto de cima, com área de toque de 44px */
+  .ajuda__fechar {
+    left: auto;
+    right: -15px;
+    top: -17px;
+    width: 44px;
+    height: 44px;
+    aspect-ratio: auto;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 11' shape-rendering='crispEdges'%3E%3Cpath fill='%23252525' d='M3,0H8V1H9V2H10V3H11V8H10V9H9V10H8V11H3V10H2V9H1V8H0V3H1V2H2V1H3Z'/%3E%3Cpath fill='%23d62e2e' d='M3,1H8V2H9V3H10V8H9V9H8V10H3V9H2V8H1V3H2V2H3Z'/%3E%3Cpath fill='%23252525' d='M3,3h1v1H3zM7,3h1v1H7zM4,4h1v1H4zM6,4h1v1H6zM5,5h1v1H5zM4,6h1v1H4zM6,6h1v1H6zM3,7h1v1H3zM7,7h1v1H7z'/%3E%3C/svg%3E") no-repeat center / 24px 24px;
+    image-rendering: pixelated;
+  }
+  html[data-tema="escuro"] .ajuda__fechar {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 11 11' shape-rendering='crispEdges'%3E%3Cpath fill='%23ffffff' d='M3,0H8V1H9V2H10V3H11V8H10V9H9V10H8V11H3V10H2V9H1V8H0V3H1V2H2V1H3Z'/%3E%3Cpath fill='%23d62e2e' d='M3,1H8V2H9V3H10V8H9V9H8V10H3V9H2V8H1V3H2V2H3Z'/%3E%3Cpath fill='%23ffffff' d='M3,3h1v1H3zM7,3h1v1H7zM4,4h1v1H4zM6,4h1v1H6zM5,5h1v1H5zM4,6h1v1H4zM6,6h1v1H6zM3,7h1v1H3zM7,7h1v1H7z'/%3E%3C/svg%3E");
+  }
+  .ajuda__fechar:focus-visible { outline-offset: -8px; }
+
+  /* o conteúdo deixa de ser "solto" sobre a imagem e passa a rolar dentro da caixa */
+  .ajuda__conteudo {
+    position: static;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    align-content: normal;
+    gap: 16px;
+    padding: 6px 14px 4px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* título, "É simples!" e instrução */
+  .ajuda__esq { gap: 8px; }
+  .ajuda__cab { height: auto; padding-right: 30px; }   /* espaço para o X não cobrir o título */
+  .ajuda__titulo { font-size: var(--aj-m-titulo); }
+  .ajuda__sub { margin-top: 4px; font-size: var(--aj-m-sub); }
+  .ajuda__intro { font-size: var(--aj-m-texto); line-height: 1.45; }
+
+  /* cada exemplo vira uma linha: imagem à esquerda, texto à direita */
+  .ajuda__ex {
+    display: grid;
+    grid-template-columns: 76px 1fr;
+    gap: 12px;
+    align-items: center;
+    text-align: left;
+  }
+  .ajuda__ex p { font-size: var(--aj-m-texto); line-height: 1.45; text-align: left; }
+  .ajuda__ex-img {
+    width: 76px;
+    height: 64px;
+    align-items: center;
+    justify-content: center;
+  }
+  .ajuda__ex-img img,
+  .ajuda__ex-img svg { max-width: 100%; object-fit: contain; }
+  .aj-tit { margin-bottom: 4px; }
+  .aj-pill { font-size: 0.85em; }
+  .aj-peca { filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35)); }
+  html[data-tema="escuro"] .aj-peca { filter: drop-shadow(0 2px 3px rgba(255, 255, 255, 0.28)); }
+}
