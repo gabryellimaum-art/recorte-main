@@ -839,3 +839,9 @@ body.colecao { overflow-x: clip; }
     margin-bottom: 2.2rem;   /* espaço abaixo da imagem */
   }
 }
+/* aumenta o popup "Que achado!" no celular */
+@media (max-width: 800px) {
+  :root {
+    --ach-largura: 78vw;
+  }
+}
