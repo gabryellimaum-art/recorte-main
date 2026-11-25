@@ -81,6 +81,7 @@
 .rodape--corte .rodape__arte-hover { opacity: 1; }
 
 .rodape__legenda {
+    background: var(--azul);
   position: absolute;
   left: 0;
   right: 0;
