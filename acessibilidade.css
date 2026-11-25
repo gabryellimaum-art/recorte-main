@@ -297,3 +297,11 @@ html[data-tema="escuro"] .acess-opcao[aria-pressed="true"]:hover {
 @media (prefers-reduced-motion: reduce) {
   .acess-botao { transition: none; }
 }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
